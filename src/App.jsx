@@ -1,13 +1,15 @@
 import { useState } from "react";
-import "./App.css";
+import "./styles/App.css";
+
+import Hero from "./components/Hero.jsx";
 
 function App() {
-  const [count, setCount] = useState(0);
-
   return (
     <>
-      <h1>Civilian</h1>
-      <h3>Create enchanting CVs</h3>
+      <div className="logotype">💼 CIVILIAN</div>
+      <div className="content">
+        <Hero />
+      </div>
     </>
   );
 }
