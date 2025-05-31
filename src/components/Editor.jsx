@@ -140,6 +140,38 @@ export default function Editor() {
     setShowEducationDialog(!showEducationDialog);
   }
 
+  function checkSkillValidity() {
+    return validateRequiredInput([newSkill]);
+  }
+
+  function checkExperienceValidity() {
+    return (
+      validateRequiredInput([
+        newExperiencePosition,
+        newExperienceOrganization,
+        newExperienceStartDate,
+      ]) &&
+      (newExperienceEndDate !== "" || newExperienceCompleted !== "completed") &&
+      (newExperienceLocation !== "" || newExperienceType !== "onsite")
+    );
+  }
+
+  function checkAccomplishmentValidity() {
+    return validateRequiredInput([newExperienceNewAccomplishment]);
+  }
+
+  function checkEducationValidity() {
+    return (
+      validateRequiredInput([
+        newEducationDegree,
+        newEducationInstitution,
+        newEducationStartDate,
+        newEducationLocation,
+      ]) &&
+      (newEducationEndDate !== "" || newEducationCompleted !== "completed")
+    );
+  }
+
   return (
     <>
       <div className="section">
@@ -276,6 +308,7 @@ export default function Editor() {
             />
             <button
               type="button"
+              disabled={!checkSkillValidity()}
               onClick={() => {
                 const newSkills = [...data.skills];
                 newSkills.push({
@@ -475,6 +508,7 @@ export default function Editor() {
                   ></textarea>
                   <button
                     type="button"
+                    disabled={!checkAccomplishmentValidity()}
                     onClick={() => {
                       const updatedNewExperienceAccomplishments = [
                         ...newExperienceAccomplishments,
@@ -504,6 +538,7 @@ export default function Editor() {
             </div>
             <button
               type="button"
+              disabled={!checkExperienceValidity()}
               onClick={() => {
                 const newExperienceList = [...data.experience];
                 newExperienceList.push({
@@ -654,6 +689,7 @@ export default function Editor() {
             </label>
             <button
               type="button"
+              disabled={!checkEducationValidity()}
               onClick={() => {
                 const newEducationList = [...data.education];
                 newEducationList.push({
@@ -693,4 +729,11 @@ function formatTenureBoundary(isoDate) {
 
 function getISODate(dateObject) {
   return dateObject.toISOString().substring(0, 10);
+}
+
+function validateRequiredInput(inputValues) {
+  for (const inputValue of inputValues) {
+    if (inputValue === "") return false;
+  }
+  return true;
 }
