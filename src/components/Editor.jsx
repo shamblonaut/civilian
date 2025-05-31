@@ -9,7 +9,11 @@ export default function Editor() {
     location: "City, Country",
     role: "Human Being",
     summary: "A good one at that",
-    skills: ["Skill 1", "Skill 2", "Skill 3"],
+    skills: [
+      { id: crypto.randomUUID(), skill: "Skill 1" },
+      { id: crypto.randomUUID(), skill: "Skill 2" },
+      { id: crypto.randomUUID(), skill: "Skill 3" },
+    ],
     experience: [
       {
         id: crypto.randomUUID(),
@@ -21,9 +25,18 @@ export default function Editor() {
         location: "City, Country",
         type: "onsite",
         accomplishments: [
-          "Some great accomplishment 1",
-          "Some great accomplishment 2",
-          "Some great accomplishment 3",
+          {
+            id: crypto.randomUUID(),
+            accomplishment: "Some great accomplishment 1",
+          },
+          {
+            id: crypto.randomUUID(),
+            accomplishment: "Some great accomplishment 2",
+          },
+          {
+            id: crypto.randomUUID(),
+            accomplishment: "Some great accomplishment 3",
+          },
         ],
       },
     ],
@@ -41,8 +54,10 @@ export default function Editor() {
   });
 
   // Input States
+  const [showSkillDialog, setShowSkillDialog] = useState(true);
   const [newSkill, setNewSkill] = useState("New Skill");
 
+  const [showExperienceDialog, setShowExperienceDialog] = useState(true);
   const [newExperiencePosition, setNewExperiencePosition] =
     useState("New Position");
   const [newExperienceOrganization, setNewExperienceOrganization] =
@@ -60,13 +75,17 @@ export default function Editor() {
   const [newExperienceType, setNewExperienceType] = useState("onsite");
   const [newExperienceAccomplishments, setNewExperienceAccomplishments] =
     useState([
-      "Some accomplishment 1",
-      "Some accomplishment 2",
-      "Some accomplishment 3",
+      { id: crypto.randomUUID(), accomplishment: "Some accomplishment 1" },
+      { id: crypto.randomUUID(), accomplishment: "Some accomplishment 2" },
+      { id: crypto.randomUUID(), accomplishment: "Some accomplishment 3" },
     ]);
+
+  const [showAccomplishmentDialog, setShowAccomplishmentDialog] =
+    useState(true);
   const [newExperienceNewAccomplishment, setNewExperienceNewAccomplishment] =
     useState("New Accomplishment");
 
+  const [showEducationDialog, setShowEducationDialog] = useState(true);
   const [newEducationDegree, setNewEducationDegree] = useState("New Degree");
   const [newEducationInstitution, setNewEducationInstitution] =
     useState("New Institution");
@@ -80,6 +99,46 @@ export default function Editor() {
     useState("completed");
   const [newEducationLocation, setNewEducationLocation] =
     useState("City, Country");
+
+  function toggleSkillDialog() {
+    setNewSkill("");
+
+    setShowSkillDialog(!showSkillDialog);
+  }
+
+  function toggleExperienceDialog() {
+    setNewExperiencePosition("");
+    setNewExperienceOrganization("");
+    setNewExperienceStartDate("");
+    setNewExperienceEndDate("");
+    setNewExperienceCompleted("completed");
+    setNewExperienceLocation("");
+    setNewExperienceType("onsite");
+    setNewExperienceAccomplishments([]);
+    setNewExperienceNewAccomplishment("");
+
+    setNewExperienceNewAccomplishment("");
+    setShowAccomplishmentDialog(false);
+
+    setShowExperienceDialog(!showExperienceDialog);
+  }
+
+  function toggleAccomplishmentsDialog() {
+    setNewExperienceNewAccomplishment("");
+
+    setShowAccomplishmentDialog(!showAccomplishmentDialog);
+  }
+
+  function toggleEducationDialog() {
+    setNewEducationDegree("");
+    setNewEducationInstitution("");
+    setNewEducationStartDate("");
+    setNewEducationEndDate("");
+    setNewEducationCompleted("completed");
+    setNewEducationLocation("");
+
+    setShowEducationDialog(!showEducationDialog);
+  }
 
   return (
     <>
@@ -185,15 +244,27 @@ export default function Editor() {
       <div className="section">
         <h2>Skills</h2>
         <ul>
-          {data.skills.map((skill, skillIndex) => (
-            <li className="skill" key={skillIndex}>
-              <p>{skill}</p>
-              <button type="button">Remove</button>
+          {data.skills.map((skillItem) => (
+            <li className="skill" key={skillItem.id}>
+              <p>{skillItem.skill}</p>
+              <button
+                type="button"
+                onClick={() =>
+                  setData({
+                    ...data,
+                    skills: data.skills.filter(
+                      (skill) => skill.id !== skillItem.id,
+                    ),
+                  })
+                }
+              >
+                Remove
+              </button>
             </li>
           ))}
         </ul>
-        <form>
-          <div className="new-skill">
+        {showSkillDialog ? (
+          <form className="new-skill">
             <h3>Add Skill</h3>
             <input
               type="text"
@@ -203,11 +274,30 @@ export default function Editor() {
               value={newSkill}
               onChange={(event) => setNewSkill(event.target.value)}
             />
-            <button type="button">Add</button>
-            <button type="button">Cancel</button>
-          </div>
-          <button type="button">+ Add Skill</button>
-        </form>
+            <button
+              type="button"
+              onClick={() => {
+                const newSkills = [...data.skills];
+                newSkills.push({
+                  id: crypto.randomUUID(),
+                  skill: newSkill,
+                });
+                setData({ ...data, skills: newSkills });
+
+                toggleSkillDialog();
+              }}
+            >
+              Add
+            </button>
+            <button type="button" onClick={toggleSkillDialog}>
+              Cancel
+            </button>
+          </form>
+        ) : (
+          <button type="button" onClick={toggleSkillDialog}>
+            + Add Skill
+          </button>
+        )}
       </div>
       <div className="section experience">
         <h2>Work Experience</h2>
@@ -226,22 +316,36 @@ export default function Editor() {
               </div>
               <div className="location">
                 <p>
-                  {experienceItem.remote ? "Remote" : experienceItem.location}
+                  {experienceItem.type === "onsite"
+                    ? experienceItem.location
+                    : "Remote"}
                 </p>
               </div>
               <ul className="accomplishments">
-                {experienceItem.accomplishments.map(
-                  (accomplishment, accomplishmentIndex) => (
-                    <li key={accomplishmentIndex}>{accomplishment}</li>
-                  ),
-                )}
+                {experienceItem.accomplishments.map((accomplishmentItem) => (
+                  <li key={accomplishmentItem.id}>
+                    {accomplishmentItem.accomplishment}
+                  </li>
+                ))}
               </ul>
-              <button type="button">Remove</button>
+              <button
+                type="button"
+                onClick={() => {
+                  setData({
+                    ...data,
+                    experience: data.experience.filter(
+                      (experience) => experience.id !== experienceItem.id,
+                    ),
+                  });
+                }}
+              >
+                Remove
+              </button>
             </li>
           ))}
         </ul>
-        <form>
-          <div className="new-experience">
+        {showExperienceDialog ? (
+          <form className="new-experience">
             <h3>Add Experience</h3>
             <label>
               <p>Position</p>
@@ -337,37 +441,102 @@ export default function Editor() {
             <div className="new-experience-accomplishments">
               <h4>Accomplishments</h4>
               <ul>
-                {newExperienceAccomplishments.map(
-                  (newExperienceAccomplishment, accomplishmentIndex) => (
-                    <li key={accomplishmentIndex}>
-                      <p>{newExperienceAccomplishment}</p>
-                      <button type="button">Remove</button>
-                    </li>
-                  ),
-                )}
+                {newExperienceAccomplishments.map((accomplishmentItem) => (
+                  <li key={accomplishmentItem.id}>
+                    <p>{accomplishmentItem.accomplishment}</p>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setNewExperienceAccomplishments(
+                          newExperienceAccomplishments.filter(
+                            (newExperienceAccomplishment) =>
+                              newExperienceAccomplishment.id !==
+                              accomplishmentItem.id,
+                          ),
+                        );
+                      }}
+                    >
+                      Remove
+                    </button>
+                  </li>
+                ))}
               </ul>
-              <div className="new-accomplishment">
-                <h5>Add Accomplishment</h5>
-                <textarea
-                  name="new-accomplishment"
-                  id="new-accomplishmet"
-                  required
-                  value={newExperienceNewAccomplishment}
-                  onChange={(event) =>
-                    setNewExperienceNewAccomplishment(event.target.value)
-                  }
-                ></textarea>
-                <button type="button">Add</button>
-                <button type="button">Cancel</button>
-              </div>
-              <button type="button">+ Add Accomplishment</button>
+              {showAccomplishmentDialog ? (
+                <div className="new-accomplishment">
+                  <h5>Add Accomplishment</h5>
+                  <textarea
+                    name="new-accomplishment"
+                    id="new-accomplishmet"
+                    required
+                    value={newExperienceNewAccomplishment}
+                    onChange={(event) =>
+                      setNewExperienceNewAccomplishment(event.target.value)
+                    }
+                  ></textarea>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      const updatedNewExperienceAccomplishments = [
+                        ...newExperienceAccomplishments,
+                      ];
+                      updatedNewExperienceAccomplishments.push({
+                        id: crypto.randomUUID(),
+                        accomplishment: newExperienceNewAccomplishment,
+                      });
+                      setNewExperienceAccomplishments(
+                        updatedNewExperienceAccomplishments,
+                      );
+
+                      toggleAccomplishmentsDialog();
+                    }}
+                  >
+                    Add
+                  </button>
+                  <button type="button" onClick={toggleAccomplishmentsDialog}>
+                    Cancel
+                  </button>
+                </div>
+              ) : (
+                <button type="button" onClick={toggleAccomplishmentsDialog}>
+                  + Add Accomplishment
+                </button>
+              )}
             </div>
-            <button type="button">Add</button>
-            <button type="button">Cancel</button>
-          </div>
-          <button type="button">+ Add Work Experience</button>
-        </form>
+            <button
+              type="button"
+              onClick={() => {
+                const newExperienceList = [...data.experience];
+                newExperienceList.push({
+                  id: crypto.randomUUID(),
+                  position: newExperiencePosition,
+                  organization: newExperienceOrganization,
+                  startDate: newExperienceStartDate,
+                  endDate: newExperienceEndDate,
+                  completed: newExperienceCompleted === "completed",
+                  location: newExperienceLocation,
+                  type: newExperienceType,
+                  accomplishments: newExperienceAccomplishments,
+                });
+                setData({ ...data, experience: newExperienceList });
+
+                toggleExperienceDialog();
+              }}
+            >
+              Add
+            </button>
+            <button type="button" onClick={toggleExperienceDialog}>
+              Cancel
+            </button>
+          </form>
+        ) : (
+          <button type="button" onClick={toggleExperienceDialog}>
+            + Add Work Experience
+          </button>
+        )}
       </div>
+      {
+        // TODO: Complete button functionality of education section
+      }
       <div className="section">
         <h2>Education</h2>
         <ul>
@@ -386,12 +555,24 @@ export default function Editor() {
               <div className="location">
                 <p>{educationItem.location}</p>
               </div>
-              <button type="button">Remove</button>
+              <button
+                type="button"
+                onClick={() => {
+                  setData({
+                    ...data,
+                    education: data.education.filter(
+                      (education) => education.id !== educationItem.id,
+                    ),
+                  });
+                }}
+              >
+                Remove
+              </button>
             </li>
           ))}
         </ul>
-        <form>
-          <div className="new-degree">
+        {showEducationDialog ? (
+          <form className="new-degree">
             <h3>Add Degree</h3>
             <label>
               <p>Degree</p>
@@ -471,11 +652,35 @@ export default function Editor() {
                 }
               />
             </label>
-            <button type="button">Add</button>
-            <button type="button">Cancel</button>
-          </div>
-          <button type="button">+ Add Degree</button>
-        </form>
+            <button
+              type="button"
+              onClick={() => {
+                const newEducationList = [...data.education];
+                newEducationList.push({
+                  id: crypto.randomUUID(),
+                  degree: newEducationDegree,
+                  institution: newEducationInstitution,
+                  startDate: newEducationStartDate,
+                  endDate: newEducationEndDate,
+                  completed: newEducationCompleted === "completed",
+                  location: newEducationLocation,
+                });
+                setData({ ...data, education: newEducationList });
+
+                toggleEducationDialog();
+              }}
+            >
+              Add
+            </button>
+            <button type="button" onClick={toggleEducationDialog}>
+              Cancel
+            </button>
+          </form>
+        ) : (
+          <button type="button" onClick={toggleEducationDialog}>
+            + Add Degree
+          </button>
+        )}
       </div>
     </>
   );
