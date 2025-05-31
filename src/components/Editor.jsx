@@ -1,104 +1,38 @@
 import { useState } from "react";
 
-export default function Editor() {
-  const [data, setData] = useState({
-    name: "John Doe",
-    phone: "+69 1234567890",
-    email: "johndoe@gmail.com",
-    website: "johndoe.com",
-    location: "City, Country",
-    role: "Human Being",
-    summary: "A good one at that",
-    skills: [
-      { id: crypto.randomUUID(), skill: "Skill 1" },
-      { id: crypto.randomUUID(), skill: "Skill 2" },
-      { id: crypto.randomUUID(), skill: "Skill 3" },
-    ],
-    experience: [
-      {
-        id: crypto.randomUUID(),
-        position: "Position 1",
-        organization: "Organization 1",
-        startDate: getISODate(new Date()),
-        endDate: getISODate(new Date()),
-        completed: true,
-        location: "City, Country",
-        type: "onsite",
-        accomplishments: [
-          {
-            id: crypto.randomUUID(),
-            accomplishment: "Some great accomplishment 1",
-          },
-          {
-            id: crypto.randomUUID(),
-            accomplishment: "Some great accomplishment 2",
-          },
-          {
-            id: crypto.randomUUID(),
-            accomplishment: "Some great accomplishment 3",
-          },
-        ],
-      },
-    ],
-    education: [
-      {
-        id: crypto.randomUUID(),
-        degree: "Degree 1",
-        institution: "Institution 1",
-        startDate: getISODate(new Date()),
-        endDate: getISODate(new Date()),
-        completed: true,
-        location: "City, Country",
-      },
-    ],
-  });
+import { formatTenureBoundary, getISODate } from "../utils.js";
 
+export default function Editor({ data, setData }) {
   // Input States
-  const [showSkillDialog, setShowSkillDialog] = useState(true);
-  const [newSkill, setNewSkill] = useState("New Skill");
+  const [showSkillDialog, setShowSkillDialog] = useState(false);
+  const [newSkill, setNewSkill] = useState("");
 
-  const [showExperienceDialog, setShowExperienceDialog] = useState(true);
-  const [newExperiencePosition, setNewExperiencePosition] =
-    useState("New Position");
+  const [showExperienceDialog, setShowExperienceDialog] = useState(false);
+  const [newExperiencePosition, setNewExperiencePosition] = useState("");
   const [newExperienceOrganization, setNewExperienceOrganization] =
-    useState("New Organization");
-  const [newExperienceStartDate, setNewExperienceStartDate] = useState(
-    getISODate(new Date()),
-  );
-  const [newExperienceEndDate, setNewExperienceEndDate] = useState(
-    getISODate(new Date()),
-  );
+    useState("");
+  const [newExperienceStartDate, setNewExperienceStartDate] = useState("");
+  const [newExperienceEndDate, setNewExperienceEndDate] = useState("");
   const [newExperienceCompleted, setNewExperienceCompleted] =
     useState("completed");
-  const [newExperienceLocation, setNewExperienceLocation] =
-    useState("City, Country");
+  const [newExperienceLocation, setNewExperienceLocation] = useState("");
   const [newExperienceType, setNewExperienceType] = useState("onsite");
   const [newExperienceAccomplishments, setNewExperienceAccomplishments] =
-    useState([
-      { id: crypto.randomUUID(), accomplishment: "Some accomplishment 1" },
-      { id: crypto.randomUUID(), accomplishment: "Some accomplishment 2" },
-      { id: crypto.randomUUID(), accomplishment: "Some accomplishment 3" },
-    ]);
+    useState([]);
 
   const [showAccomplishmentDialog, setShowAccomplishmentDialog] =
-    useState(true);
+    useState(false);
   const [newExperienceNewAccomplishment, setNewExperienceNewAccomplishment] =
-    useState("New Accomplishment");
+    useState("");
 
-  const [showEducationDialog, setShowEducationDialog] = useState(true);
-  const [newEducationDegree, setNewEducationDegree] = useState("New Degree");
-  const [newEducationInstitution, setNewEducationInstitution] =
-    useState("New Institution");
-  const [newEducationStartDate, setNewEducationStartDate] = useState(
-    getISODate(new Date()),
-  );
-  const [newEducationEndDate, setNewEducationEndDate] = useState(
-    getISODate(new Date()),
-  );
+  const [showEducationDialog, setShowEducationDialog] = useState(false);
+  const [newEducationDegree, setNewEducationDegree] = useState("");
+  const [newEducationInstitution, setNewEducationInstitution] = useState("");
+  const [newEducationStartDate, setNewEducationStartDate] = useState("");
+  const [newEducationEndDate, setNewEducationEndDate] = useState("");
   const [newEducationCompleted, setNewEducationCompleted] =
     useState("completed");
-  const [newEducationLocation, setNewEducationLocation] =
-    useState("City, Country");
+  const [newEducationLocation, setNewEducationLocation] = useState("");
 
   function toggleSkillDialog() {
     setNewSkill("");
@@ -720,15 +654,6 @@ export default function Editor() {
       </div>
     </>
   );
-}
-
-function formatTenureBoundary(isoDate) {
-  const date = new Date(isoDate);
-  return `${(date.getMonth() + 1).toString().padStart(2, "0")}/${date.getFullYear()}`;
-}
-
-function getISODate(dateObject) {
-  return dateObject.toISOString().substring(0, 10);
 }
 
 function validateRequiredInput(inputValues) {

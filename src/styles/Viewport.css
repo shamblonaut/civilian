@@ -1,0 +1,10 @@
+.viewport {
+  width: min-content;
+  border: 2px solid #000000;
+}
+
+.viewport .cv {
+  height: 750px;
+  aspect-ratio: 1 / 1.414;
+  overflow-y: scroll;
+}
