@@ -1,6 +1,7 @@
 import { useState } from "react";
 import "./App.css";
 
+import Navigator from "./components/Navigator.jsx";
 import Editor from "./components/Editor.jsx";
 import Viewport from "./components/Viewport.jsx";
 
@@ -147,14 +148,34 @@ function App() {
     ],
   });
 
+  const sections = [
+    { id: crypto.randomUUID(), title: "Personal Information" },
+    { id: crypto.randomUUID(), title: "Career Summary" },
+    { id: crypto.randomUUID(), title: "Skills" },
+    { id: crypto.randomUUID(), title: "Work Experience" },
+    { id: crypto.randomUUID(), title: "Education" },
+  ];
+  const [activeSection, setActiveSection] = useState(sections[0]);
+
+  const [showCV, setShowCV] = useState(false);
+
   return (
     <>
       <header>
         <h1>CIVILIAN</h1>
       </header>
       <main>
-        <Editor data={data} setData={setData} />
-        <Viewport data={data} />
+        <Navigator
+          sections={sections}
+          setActiveSection={setActiveSection}
+          showCV={showCV}
+          setShowCV={setShowCV}
+        />
+        {showCV ? (
+          <Viewport data={data} />
+        ) : (
+          <Editor data={data} setData={setData} activeSection={activeSection} />
+        )}
       </main>
     </>
   );
