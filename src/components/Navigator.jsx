@@ -6,7 +6,9 @@ export default function Navigator({
   setData,
   showCV,
   setShowCV,
+  checkCVValidity,
   loadExample,
+  clearCV,
 }) {
   return (
     <nav>
@@ -32,13 +34,13 @@ export default function Navigator({
         <button className="load-example" type="button" onClick={loadExample}>
           Load Example
         </button>
-        <button className="cv-clear" type="button" onClick={() => setData({})}>
+        <button className="cv-clear" type="button" onClick={clearCV}>
           Clear CV
         </button>
         <button
           className="cv-reveal"
           type="button"
-          disabled={showCV}
+          disabled={!checkCVValidity() || showCV}
           onClick={() => setShowCV(true)}
         >
           View CV

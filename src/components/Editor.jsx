@@ -162,7 +162,7 @@ export default function Editor({ data, setData, activeSection }) {
               />
             </label>
             <label>
-              <p>Website</p>
+              <p>Website [Optional]</p>
               <input
                 type="text"
                 name="website"

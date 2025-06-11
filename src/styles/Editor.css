@@ -10,6 +10,7 @@
 }
 
 .editor .section {
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -57,6 +58,7 @@
   padding: 4px 8px;
   border-bottom: 2px solid lightgray;
   margin: 24px 0;
+  width: 100%;
 }
 
 .editor form input:not(:placeholder-shown),
@@ -135,6 +137,7 @@
 
 /* NEW ITEM CARDS */
 .new-item {
+  min-width: 60%;
   padding: 16px 32px;
 }
 

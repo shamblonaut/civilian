@@ -166,6 +166,32 @@ function App() {
     setData(exampleCV);
   }
 
+  function clearCV() {
+    setData({
+      name: "",
+      phone: "",
+      email: "",
+      website: "",
+      location: "",
+      role: "",
+      summary: "",
+      skills: [],
+      experience: [],
+      education: [],
+    });
+  }
+
+  function checkCVValidity() {
+    return (
+      data.name &&
+      data.phone &&
+      data.email &&
+      data.location &&
+      data.role &&
+      data.summary
+    );
+  }
+
   return (
     <>
       <header>
@@ -177,7 +203,9 @@ function App() {
         setData={setData}
         showCV={showCV}
         setShowCV={setShowCV}
+        checkCVValidity={checkCVValidity}
         loadExample={loadExample}
+        clearCV={clearCV}
       />
       <main>
         {showCV ? (
