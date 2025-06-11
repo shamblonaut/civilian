@@ -232,27 +232,29 @@ export default function Editor({ data, setData, activeSection }) {
       {activeSection.title === "Skills" && (
         <div className="section skills">
           <h2 className="section-title">Skills</h2>
-          <ul>
-            {data.skills.map((skillItem) => (
-              <li className="skill-item item card" key={skillItem.id}>
-                <p>{skillItem.skill}</p>
-                <button
-                  type="button"
-                  className="item-action remove-button"
-                  onClick={() =>
-                    setData({
-                      ...data,
-                      skills: data.skills.filter(
-                        (skill) => skill.id !== skillItem.id,
-                      ),
-                    })
-                  }
-                >
-                  <Trash />
-                </button>
-              </li>
-            ))}
-          </ul>
+          {data.skills && data.skills.length > 0 && (
+            <ul>
+              {data.skills.map((skillItem) => (
+                <li className="skill-item item card" key={skillItem.id}>
+                  <p>{skillItem.skill}</p>
+                  <button
+                    type="button"
+                    className="item-action remove-button"
+                    onClick={() =>
+                      setData({
+                        ...data,
+                        skills: data.skills.filter(
+                          (skill) => skill.id !== skillItem.id,
+                        ),
+                      })
+                    }
+                  >
+                    <Trash />
+                  </button>
+                </li>
+              ))}
+            </ul>
+          )}
           {showSkillDialog ? (
             <form className="new-skill new-item card">
               <h2>Add Skill</h2>
@@ -305,54 +307,61 @@ export default function Editor({ data, setData, activeSection }) {
       {activeSection.title === "Work Experience" && (
         <div className="section experience">
           <h2 className="section-title">Work Experience</h2>
-          <ul>
-            {data.experience.map((experienceItem) => (
-              <li className="experience-item item card" key={experienceItem.id}>
-                <p className="position">{experienceItem.position}</p>
-                <p className="organization">{experienceItem.organization}</p>
-                <div className="spacetime">
-                  <div className="tenure">
-                    <Calendar className="icon" />
-                    <p>
-                      {formatTenureBoundary(experienceItem.startDate)} -{" "}
-                      {experienceItem.completed
-                        ? formatTenureBoundary(experienceItem.endDate)
-                        : "Present"}
-                    </p>
-                  </div>
-                  <div className="location">
-                    <MapPin className="icon" />
-                    <p>
-                      {experienceItem.type === "onsite"
-                        ? experienceItem.location
-                        : "Remote"}
-                    </p>
-                  </div>
-                </div>
-                <ul className="accomplishments">
-                  {experienceItem.accomplishments.map((accomplishmentItem) => (
-                    <li key={accomplishmentItem.id}>
-                      {accomplishmentItem.accomplishment}
-                    </li>
-                  ))}
-                </ul>
-                <button
-                  type="button"
-                  className="item-action remove-button"
-                  onClick={() => {
-                    setData({
-                      ...data,
-                      experience: data.experience.filter(
-                        (experience) => experience.id !== experienceItem.id,
-                      ),
-                    });
-                  }}
+          {data.experience && data.experience.length > 0 && (
+            <ul>
+              {data.experience.map((experienceItem) => (
+                <li
+                  className="experience-item item card"
+                  key={experienceItem.id}
                 >
-                  <Trash className="icon" />
-                </button>
-              </li>
-            ))}
-          </ul>
+                  <p className="position">{experienceItem.position}</p>
+                  <p className="organization">{experienceItem.organization}</p>
+                  <div className="spacetime">
+                    <div className="tenure">
+                      <Calendar className="icon" />
+                      <p>
+                        {formatTenureBoundary(experienceItem.startDate)} -{" "}
+                        {experienceItem.completed
+                          ? formatTenureBoundary(experienceItem.endDate)
+                          : "Present"}
+                      </p>
+                    </div>
+                    <div className="location">
+                      <MapPin className="icon" />
+                      <p>
+                        {experienceItem.type === "onsite"
+                          ? experienceItem.location
+                          : "Remote"}
+                      </p>
+                    </div>
+                  </div>
+                  <ul className="accomplishments">
+                    {experienceItem.accomplishments.map(
+                      (accomplishmentItem) => (
+                        <li key={accomplishmentItem.id}>
+                          {accomplishmentItem.accomplishment}
+                        </li>
+                      ),
+                    )}
+                  </ul>
+                  <button
+                    type="button"
+                    className="item-action remove-button"
+                    onClick={() => {
+                      setData({
+                        ...data,
+                        experience: data.experience.filter(
+                          (experience) => experience.id !== experienceItem.id,
+                        ),
+                      });
+                    }}
+                  >
+                    <Trash className="icon" />
+                  </button>
+                </li>
+              ))}
+            </ul>
+          )}
           {showExperienceDialog ? (
             <form className="new-experience new-item card">
               <h2>Add Experience</h2>
@@ -583,43 +592,45 @@ export default function Editor({ data, setData, activeSection }) {
       {activeSection.title === "Education" && (
         <div className="section">
           <h2 className="section-title">Education</h2>
-          <ul>
-            {data.education.map((educationItem) => (
-              <li className="education-item item card" key={educationItem.id}>
-                <p className="degree">{educationItem.degree}</p>
-                <p className="institution">{educationItem.institution}</p>
-                <div className="spacetime">
-                  <div className="tenure">
-                    <Calendar className="icon" />
-                    <p>
-                      {formatTenureBoundary(educationItem.startDate)} -{" "}
-                      {educationItem.completed
-                        ? formatTenureBoundary(educationItem.endDate)
-                        : "Present"}
-                    </p>
+          {data.education && data.education.length > 0 && (
+            <ul>
+              {data.education.map((educationItem) => (
+                <li className="education-item item card" key={educationItem.id}>
+                  <p className="degree">{educationItem.degree}</p>
+                  <p className="institution">{educationItem.institution}</p>
+                  <div className="spacetime">
+                    <div className="tenure">
+                      <Calendar className="icon" />
+                      <p>
+                        {formatTenureBoundary(educationItem.startDate)} -{" "}
+                        {educationItem.completed
+                          ? formatTenureBoundary(educationItem.endDate)
+                          : "Present"}
+                      </p>
+                    </div>
+                    <div className="location">
+                      <MapPin className="icon" />
+                      <p>{educationItem.location}</p>
+                    </div>
                   </div>
-                  <div className="location">
-                    <MapPin className="icon" />
-                    <p>{educationItem.location}</p>
-                  </div>
-                </div>
-                <button
-                  type="button"
-                  className="item-action remove-button"
-                  onClick={() => {
-                    setData({
-                      ...data,
-                      education: data.education.filter(
-                        (education) => education.id !== educationItem.id,
-                      ),
-                    });
-                  }}
-                >
-                  <Trash className="icon" />
-                </button>
-              </li>
-            ))}
-          </ul>
+                  <button
+                    type="button"
+                    className="item-action remove-button"
+                    onClick={() => {
+                      setData({
+                        ...data,
+                        education: data.education.filter(
+                          (education) => education.id !== educationItem.id,
+                        ),
+                      });
+                    }}
+                  >
+                    <Trash className="icon" />
+                  </button>
+                </li>
+              ))}
+            </ul>
+          )}
           {showEducationDialog ? (
             <form className="new-degree new-item card">
               <h2>Add Degree</h2>

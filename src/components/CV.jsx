@@ -11,24 +11,30 @@ export default function CV({ data }) {
         <div className="name">{data.name}</div>
         <div className="role">{data.role}</div>
         <div className="personal">
-          <div className="phone info">
-            <Phone className="icon" />
-            <p>{data.phone}</p>
-          </div>
-          <div className="email info">
-            <Mail className="icon" />
-            <p>{data.email}</p>
-          </div>
+          {data.phone && (
+            <div className="phone info">
+              <Phone className="icon" />
+              <p>{data.phone}</p>
+            </div>
+          )}
+          {data.email && (
+            <div className="email info">
+              <Mail className="icon" />
+              <p>{data.email}</p>
+            </div>
+          )}
           {data.website && (
             <div className="website info">
               <Link className="icon" />
               <p>{data.website}</p>
             </div>
           )}
-          <div className="location info">
-            <MapPin className="icon" />
-            <p>{data.location}</p>
-          </div>
+          {data.location && (
+            <div className="location info">
+              <MapPin className="icon" />
+              <p>{data.location}</p>
+            </div>
+          )}
         </div>
       </div>
       {data.summary && (
@@ -39,7 +45,7 @@ export default function CV({ data }) {
           </div>
         </div>
       )}
-      {data.skills.length > 0 && (
+      {data.skills && data.skills.length > 0 && (
         <div className="section skills">
           <div className="heading">SKILLS</div>
           <div className="content">
@@ -51,7 +57,7 @@ export default function CV({ data }) {
           </div>
         </div>
       )}
-      {data.experience.length > 0 && (
+      {data.experience && data.experience.length > 0 && (
         <div className="section experience">
           <div className="heading">EXPERIENCE</div>
           <div className="content">
@@ -94,7 +100,7 @@ export default function CV({ data }) {
           </div>
         </div>
       )}
-      {data.education.length > 0 && (
+      {data.education && data.education.length > 0 && (
         <div className="section education">
           <div className="heading">EDUCATION</div>
           <div className="content">
