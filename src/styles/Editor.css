@@ -40,6 +40,13 @@
   transition: all 250ms ease-in-out;
 }
 
+.editor
+  form
+  label
+  p:has(~ .placeholder-labelled:placeholder-shown.error-required) {
+  color: red;
+}
+
 .editor form label p:has(~ .placeholder-labelled:placeholder-shown) {
   font-size: 1.25rem;
   color: gray;
@@ -64,6 +71,11 @@
 .editor form input:not(:placeholder-shown),
 .editor form textarea:not(:placeholder-shown) {
   border-color: blue;
+}
+
+.editor form input.error-required,
+.editor form textarea.error-required {
+  border-color: red;
 }
 
 .editor form input::placeholder {

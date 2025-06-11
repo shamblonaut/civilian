@@ -5,6 +5,19 @@ import Navigator from "./components/Navigator.jsx";
 import Editor from "./components/Editor.jsx";
 import Viewport from "./components/Viewport.jsx";
 
+const emptyCV = {
+  name: "",
+  phone: "",
+  email: "",
+  website: "",
+  location: "",
+  role: "",
+  summary: "",
+  skills: [],
+  experience: [],
+  education: [],
+};
+
 // CV Template and example content credits to EnhanCV [https://enhancv.com]
 const exampleCV = {
   name: "John Doe",
@@ -157,39 +170,38 @@ const sections = [
 ];
 
 function App() {
-  const [data, setData] = useState({});
+  const [data, setData] = useState(emptyCV);
 
   const [activeSection, setActiveSection] = useState(sections[0]);
   const [showCV, setShowCV] = useState(false);
 
   function loadExample() {
     setData(exampleCV);
+    document.querySelectorAll(":required").forEach((input) => {
+      input.classList.remove("error-required");
+    });
   }
 
   function clearCV() {
-    setData({
-      name: "",
-      phone: "",
-      email: "",
-      website: "",
-      location: "",
-      role: "",
-      summary: "",
-      skills: [],
-      experience: [],
-      education: [],
+    setData(emptyCV);
+    document.querySelectorAll(":required").forEach((input) => {
+      input.classList.remove("error-required");
     });
   }
 
   function checkCVValidity() {
-    return (
-      data.name &&
-      data.phone &&
-      data.email &&
-      data.location &&
-      data.role &&
-      data.summary
-    );
+    let valid = true;
+
+    document.querySelectorAll(":required").forEach((input) => {
+      if (input.value === "") {
+        input.classList.add("error-required");
+        valid = false;
+      } else {
+        input.classList.remove("error-required");
+      }
+    });
+
+    return valid;
   }
 
   return (

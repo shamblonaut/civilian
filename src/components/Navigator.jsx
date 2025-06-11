@@ -40,8 +40,11 @@ export default function Navigator({
         <button
           className="cv-reveal"
           type="button"
-          disabled={!checkCVValidity() || showCV}
-          onClick={() => setShowCV(true)}
+          disabled={showCV}
+          onClick={() => {
+            if (!checkCVValidity()) return;
+            setShowCV(true);
+          }}
         >
           View CV
         </button>

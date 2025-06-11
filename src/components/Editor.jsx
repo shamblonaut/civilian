@@ -2,7 +2,13 @@ import "../styles/Editor.css";
 
 import { useState } from "react";
 import TextareaAutosize from "react-textarea-autosize";
-import { Trash, Calendar, MapPin } from "lucide-react";
+import {
+  Trash,
+  Calendar,
+  MapPin,
+  ChevronLeft,
+  ChevronRight,
+} from "lucide-react";
 
 import { formatTenureBoundary, getISODate } from "../utils.js";
 
@@ -126,9 +132,12 @@ export default function Editor({ data, setData, activeSection }) {
                 placeholder=""
                 required
                 value={data.name || ""}
-                onChange={(event) =>
-                  setData({ ...data, name: event.target.value })
-                }
+                onChange={(event) => {
+                  setData({ ...data, name: event.target.value });
+                  document
+                    .getElementById("name")
+                    .classList.remove("error-required");
+                }}
               />
             </label>
             <label>
@@ -141,9 +150,12 @@ export default function Editor({ data, setData, activeSection }) {
                 placeholder=""
                 required
                 value={data.phone || ""}
-                onChange={(event) =>
-                  setData({ ...data, phone: event.target.value })
-                }
+                onChange={(event) => {
+                  setData({ ...data, phone: event.target.value });
+                  document
+                    .getElementById("phone")
+                    .classList.remove("error-required");
+                }}
               />
             </label>
             <label>
@@ -156,9 +168,12 @@ export default function Editor({ data, setData, activeSection }) {
                 placeholder=""
                 required
                 value={data.email || ""}
-                onChange={(event) =>
-                  setData({ ...data, email: event.target.value })
-                }
+                onChange={(event) => {
+                  setData({ ...data, email: event.target.value });
+                  document
+                    .getElementById("email")
+                    .classList.remove("error-required");
+                }}
               />
             </label>
             <label>
@@ -185,9 +200,12 @@ export default function Editor({ data, setData, activeSection }) {
                 placeholder=""
                 required
                 value={data.location || ""}
-                onChange={(event) =>
-                  setData({ ...data, location: event.target.value })
-                }
+                onChange={(event) => {
+                  setData({ ...data, location: event.target.value });
+                  document
+                    .getElementById("personal-location")
+                    .classList.remove("error-required");
+                }}
               />
             </label>
           </form>
@@ -207,9 +225,12 @@ export default function Editor({ data, setData, activeSection }) {
                 placeholder=""
                 required
                 value={data.role || ""}
-                onChange={(event) =>
-                  setData({ ...data, role: event.target.value })
-                }
+                onChange={(event) => {
+                  setData({ ...data, role: event.target.value });
+                  document
+                    .getElementById("role")
+                    .classList.remove("error-required");
+                }}
               />
             </label>
             <label>
@@ -221,9 +242,12 @@ export default function Editor({ data, setData, activeSection }) {
                 placeholder=""
                 required
                 value={data.summary || ""}
-                onChange={(event) =>
-                  setData({ ...data, summary: event.target.value })
-                }
+                onChange={(event) => {
+                  setData({ ...data, summary: event.target.value });
+                  document
+                    .getElementById("summary")
+                    .classList.remove("error-required");
+                }}
               />
             </label>
           </form>
@@ -266,7 +290,6 @@ export default function Editor({ data, setData, activeSection }) {
                   id="new-skill"
                   className="placeholder-labelled"
                   placeholder=""
-                  required
                   value={newSkill}
                   onChange={(event) => setNewSkill(event.target.value)}
                 />
@@ -373,7 +396,6 @@ export default function Editor({ data, setData, activeSection }) {
                   id="new-experience-position"
                   className="placeholder-labelled"
                   placeholder=""
-                  required
                   value={newExperiencePosition}
                   onChange={(event) =>
                     setNewExperiencePosition(event.target.value)
@@ -388,7 +410,6 @@ export default function Editor({ data, setData, activeSection }) {
                   id="new-experience-organization"
                   className="placeholder-labelled"
                   placeholder=""
-                  required
                   value={newExperienceOrganization}
                   onChange={(event) =>
                     setNewExperienceOrganization(event.target.value)
@@ -416,7 +437,6 @@ export default function Editor({ data, setData, activeSection }) {
                     id="new-experience-location"
                     className="placeholder-labelled"
                     placeholder=""
-                    required
                     value={newExperienceLocation}
                     onChange={(event) =>
                       setNewExperienceLocation(event.target.value)
@@ -432,7 +452,6 @@ export default function Editor({ data, setData, activeSection }) {
                     type="date"
                     name="new-experience-start"
                     id="new-experience-start"
-                    required
                     value={newExperienceStartDate}
                     onChange={(event) =>
                       setNewExperienceStartDate(event.target.value)
@@ -503,7 +522,6 @@ export default function Editor({ data, setData, activeSection }) {
                         id="new-accomplishmet"
                         className="placeholder-labelled"
                         placeholder=""
-                        required
                         value={newExperienceNewAccomplishment}
                         onChange={(event) =>
                           setNewExperienceNewAccomplishment(event.target.value)
@@ -642,7 +660,6 @@ export default function Editor({ data, setData, activeSection }) {
                   id="new-degree-name"
                   className="placeholder-labelled"
                   placeholder=""
-                  required
                   value={newEducationDegree}
                   onChange={(event) =>
                     setNewEducationDegree(event.target.value)
@@ -657,7 +674,6 @@ export default function Editor({ data, setData, activeSection }) {
                   id="new-degree-institution"
                   className="placeholder-labelled"
                   placeholder=""
-                  required
                   value={newEducationInstitution}
                   onChange={(event) =>
                     setNewEducationInstitution(event.target.value)
@@ -672,7 +688,6 @@ export default function Editor({ data, setData, activeSection }) {
                   id="new-degree-location"
                   className="placeholder-labelled"
                   placeholder=""
-                  required
                   value={newEducationLocation}
                   onChange={(event) =>
                     setNewEducationLocation(event.target.value)
@@ -688,7 +703,6 @@ export default function Editor({ data, setData, activeSection }) {
                     name="new-degree-start"
                     id="new-degree-start"
                     placeholder=""
-                    required
                     value={newEducationStartDate}
                     onChange={(event) =>
                       setNewEducationStartDate(event.target.value)
@@ -762,7 +776,6 @@ export default function Editor({ data, setData, activeSection }) {
           )}
         </div>
       )}
-    </div>
   );
 }
 
