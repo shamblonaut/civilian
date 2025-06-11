@@ -192,6 +192,14 @@ function App() {
   function checkCVValidity() {
     let valid = true;
 
+    if (!data.name || !data.phone || !data.email || !data.location) {
+      setActiveSection(sections[0]);
+      valid = false;
+    } else if (!data.role || !data.summary) {
+      setActiveSection(sections[1]);
+      valid = false;
+    }
+
     document.querySelectorAll(":required").forEach((input) => {
       if (input.value === "") {
         input.classList.add("error-required");
