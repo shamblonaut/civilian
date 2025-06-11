@@ -1,0 +1,269 @@
+.editor {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.editor ul {
+  padding: 0;
+}
+
+.editor .section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.add-item {
+  padding: 8px 16px;
+  margin: 16px;
+}
+
+/* FORMS */
+.editor form {
+  display: flex;
+  flex-direction: column;
+}
+
+.editor form label {
+  position: relative;
+  display: block;
+}
+
+.editor form label p:has(~ .placeholder-labelled) {
+  position: absolute;
+  top: 0;
+  color: blue;
+
+  transition: all 250ms ease-in-out;
+}
+
+.editor form label p:has(~ .placeholder-labelled:placeholder-shown) {
+  font-size: 1.25rem;
+  color: gray;
+  cursor: text;
+  top: 26px;
+  left: 12px;
+}
+
+.editor form input:not([type="date"]),
+.editor form textarea {
+  appearance: none;
+  border: 0;
+  outline: 0;
+
+  font-size: 1.25rem;
+  padding: 4px 8px;
+  border-bottom: 2px solid lightgray;
+  margin: 24px 0;
+}
+
+.editor form input:not(:placeholder-shown),
+.editor form textarea:not(:placeholder-shown) {
+  border-color: blue;
+}
+
+.editor form input::placeholder {
+  color: transparent;
+}
+
+.editor form textarea {
+  resize: none;
+  height: min-content;
+}
+
+/* ITEM CARDS */
+.card {
+  list-style: none;
+  box-shadow:
+    rgba(45, 35, 66, 0.4) 0 2px 4px,
+    #d6d6e7 0 -3px 0 inset;
+  background-color: #fcfcfd;
+
+  border-radius: 4px;
+  padding: 16px;
+  margin: 16px;
+
+  position: relative;
+}
+
+.editor .item {
+  padding-right: 64px;
+}
+
+.editor .item .tenure,
+.item .location {
+  display: flex;
+}
+
+.editor .item .spacetime {
+  margin: 8px 0;
+}
+
+.editor .item .spacetime .icon {
+  width: 16px;
+  height: auto;
+  margin-right: 8px;
+}
+
+.item-action {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  padding: 8px;
+
+  box-shadow: #0000004a 0 3px 7px inset;
+}
+
+.item-action:active {
+  box-shadow: #0000004a 0 3px 7px inset;
+  transform: none;
+}
+
+.remove-button {
+  background-color: red;
+  color: white;
+}
+
+.remove-button:hover {
+  box-shadow:
+    #2d234266 0 2px 4px,
+    #2d23424c 0 7px 13px -3px,
+    #d20f39 0 -3px 0 inset;
+}
+
+/* NEW ITEM CARDS */
+.new-item {
+  padding: 16px 32px;
+}
+
+.new-item h2 {
+  text-align: center;
+}
+
+.new-item h2,
+.new-item h4 {
+  margin-bottom: 8px;
+}
+
+.new-item-actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 16px;
+}
+
+.new-item-actions button {
+  padding: 8px 16px;
+}
+
+.new-item-actions button:not(:first-child) {
+  margin-left: 16px;
+}
+
+.misc-input {
+  display: flex;
+  align-items: center;
+  font-size: 1.1rem;
+  margin: 16px 0;
+}
+
+.misc-input p,
+.completed-input {
+  margin-right: 16px;
+}
+
+/* SECTION SPECIFIC STYLES */
+
+/* Skills */
+.editor .section.skills ul {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+
+.skill-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.skill-item button {
+  padding: 4px;
+  margin-left: 16px;
+  transition: all 150ms ease-in;
+}
+
+/* Experience */
+.experience-item .position {
+  font-size: 1.5em;
+  font-weight: bold;
+  color: #1e1e1e;
+}
+
+.experience-item .organization {
+  font-size: 1.1em;
+  font-weight: bold;
+  color: blue;
+}
+
+.experience-item ul.accomplishments {
+  padding-left: 12px;
+}
+
+.experience-item .accomplishments li {
+  list-style: disc;
+}
+
+/* Experience - Accomplishments */
+.new-experience-accomplishments li {
+  margin-left: 16px;
+}
+
+.new-experience-accomplishments .add-item,
+.new-experience-accomplishments .new-item {
+  font-size: 1rem;
+  margin-left: 0;
+  padding: 16px;
+}
+
+.new-experience-accomplishments .new-item-actions {
+  justify-content: flex-start;
+  margin-top: 8px;
+}
+
+.new-experience-accomplishment {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto max-content;
+  align-items: center;
+}
+
+.new-experience-accomplishment .item-action {
+  position: relative;
+  top: 0;
+  left: 0;
+  padding: 4px;
+}
+
+.new-experience-accomplishment .icon {
+  width: 16px;
+  height: auto;
+}
+
+/* Education */
+.education-item .degree {
+  font-size: 1.5em;
+  color: #1e1e1e;
+}
+
+.education-item .institution {
+  font-size: 1.1em;
+  font-weight: bold;
+  color: blue;
+}
+
+.education-item {
+  padding-right: 96px;
+}

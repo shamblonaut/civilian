@@ -31,12 +31,14 @@ export default function CV({ data }) {
           </div>
         </div>
       </div>
-      <div className="section summary">
-        <div className="heading">SUMMARY</div>
-        <div className="content">
-          <p>{data.summary}</p>
+      {data.summary && (
+        <div className="section summary">
+          <div className="heading">SUMMARY</div>
+          <div className="content">
+            <p>{data.summary}</p>
+          </div>
         </div>
-      </div>
+      )}
       {data.skills.length > 0 && (
         <div className="section skills">
           <div className="heading">SKILLS</div>

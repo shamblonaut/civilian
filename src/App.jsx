@@ -150,7 +150,7 @@ function App() {
 
   const sections = [
     { id: crypto.randomUUID(), title: "Personal Information" },
-    { id: crypto.randomUUID(), title: "Career Summary" },
+    { id: crypto.randomUUID(), title: "Professional Summary" },
     { id: crypto.randomUUID(), title: "Skills" },
     { id: crypto.randomUUID(), title: "Work Experience" },
     { id: crypto.randomUUID(), title: "Education" },
@@ -164,13 +164,13 @@ function App() {
       <header>
         <h1>CIVILIAN</h1>
       </header>
+      <Navigator
+        sections={sections}
+        setActiveSection={setActiveSection}
+        showCV={showCV}
+        setShowCV={setShowCV}
+      />
       <main>
-        <Navigator
-          sections={sections}
-          setActiveSection={setActiveSection}
-          showCV={showCV}
-          setShowCV={setShowCV}
-        />
         {showCV ? (
           <Viewport data={data} />
         ) : (

@@ -1,4 +1,8 @@
+import "../styles/Editor.css";
+
 import { useState } from "react";
+import TextareaAutosize from "react-textarea-autosize";
+import { Trash, Calendar, MapPin } from "lucide-react";
 
 import { formatTenureBoundary, getISODate } from "../utils.js";
 
@@ -107,10 +111,10 @@ export default function Editor({ data, setData, activeSection }) {
   }
 
   return (
-    <>
+    <div className="editor">
       {activeSection.title === "Personal Information" && (
         <div className="section">
-          <h2>Personal Information</h2>
+          <h2 className="section-title">Personal Information</h2>
           <form>
             <label>
               <p>Name</p>
@@ -118,6 +122,8 @@ export default function Editor({ data, setData, activeSection }) {
                 type="text"
                 name="name"
                 id="name"
+                className="placeholder-labelled"
+                placeholder=""
                 required
                 value={data.name}
                 onChange={(event) =>
@@ -131,6 +137,8 @@ export default function Editor({ data, setData, activeSection }) {
                 type="tel"
                 name="phone"
                 id="phone"
+                className="placeholder-labelled"
+                placeholder=""
                 required
                 value={data.phone}
                 onChange={(event) =>
@@ -144,6 +152,8 @@ export default function Editor({ data, setData, activeSection }) {
                 type="email"
                 name="email"
                 id="email"
+                className="placeholder-labelled"
+                placeholder=""
                 required
                 value={data.email}
                 onChange={(event) =>
@@ -157,6 +167,8 @@ export default function Editor({ data, setData, activeSection }) {
                 type="text"
                 name="website"
                 id="website"
+                className="placeholder-labelled"
+                placeholder=""
                 value={data.website}
                 onChange={(event) =>
                   setData({ ...data, website: event.target.value })
@@ -169,6 +181,8 @@ export default function Editor({ data, setData, activeSection }) {
                 type="text"
                 name="personal-location"
                 id="personal-location"
+                className="placeholder-labelled"
+                placeholder=""
                 required
                 value={data.location}
                 onChange={(event) =>
@@ -179,9 +193,9 @@ export default function Editor({ data, setData, activeSection }) {
           </form>
         </div>
       )}
-      {activeSection.title === "Career Summary" && (
+      {activeSection.title === "Professional Summary" && (
         <div className="section">
-          <h2>Career Summary</h2>
+          <h2 className="section-title">Professional Summary</h2>
           <form>
             <label>
               <p>Role</p>
@@ -189,6 +203,8 @@ export default function Editor({ data, setData, activeSection }) {
                 type="text"
                 name="role"
                 id="role"
+                className="placeholder-labelled"
+                placeholder=""
                 required
                 value={data.role}
                 onChange={(event) =>
@@ -198,28 +214,31 @@ export default function Editor({ data, setData, activeSection }) {
             </label>
             <label>
               <p>Summary</p>
-              <textarea
+              <TextareaAutosize
                 name="summary"
                 id="summary"
+                className="placeholder-labelled"
+                placeholder=""
                 required
                 value={data.summary}
                 onChange={(event) =>
                   setData({ ...data, summary: event.target.value })
                 }
-              ></textarea>
+              />
             </label>
           </form>
         </div>
       )}
       {activeSection.title === "Skills" && (
-        <div className="section">
-          <h2>Skills</h2>
+        <div className="section skills">
+          <h2 className="section-title">Skills</h2>
           <ul>
             {data.skills.map((skillItem) => (
-              <li className="skill" key={skillItem.id}>
+              <li className="skill-item item card" key={skillItem.id}>
                 <p>{skillItem.skill}</p>
                 <button
                   type="button"
+                  className="item-action remove-button"
                   onClick={() =>
                     setData({
                       ...data,
@@ -229,44 +248,55 @@ export default function Editor({ data, setData, activeSection }) {
                     })
                   }
                 >
-                  Remove
+                  <Trash />
                 </button>
               </li>
             ))}
           </ul>
           {showSkillDialog ? (
-            <form className="new-skill">
-              <h3>Add Skill</h3>
-              <input
-                type="text"
-                name="new-skill"
-                id="new-skill"
-                required
-                value={newSkill}
-                onChange={(event) => setNewSkill(event.target.value)}
-              />
-              <button
-                type="button"
-                disabled={!checkSkillValidity()}
-                onClick={() => {
-                  const newSkills = [...data.skills];
-                  newSkills.push({
-                    id: crypto.randomUUID(),
-                    skill: newSkill,
-                  });
-                  setData({ ...data, skills: newSkills });
+            <form className="new-skill new-item card">
+              <h2>Add Skill</h2>
+              <label>
+                <p>Skill</p>
+                <input
+                  type="text"
+                  name="new-skill"
+                  id="new-skill"
+                  className="placeholder-labelled"
+                  placeholder=""
+                  required
+                  value={newSkill}
+                  onChange={(event) => setNewSkill(event.target.value)}
+                />
+              </label>
+              <div className="new-item-actions">
+                <button
+                  type="button"
+                  disabled={!checkSkillValidity()}
+                  onClick={() => {
+                    const newSkills = [...data.skills];
+                    newSkills.push({
+                      id: crypto.randomUUID(),
+                      skill: newSkill,
+                    });
+                    setData({ ...data, skills: newSkills });
 
-                  toggleSkillDialog();
-                }}
-              >
-                Add
-              </button>
-              <button type="button" onClick={toggleSkillDialog}>
-                Cancel
-              </button>
+                    toggleSkillDialog();
+                  }}
+                >
+                  Add
+                </button>
+                <button type="button" onClick={toggleSkillDialog}>
+                  Cancel
+                </button>
+              </div>
             </form>
           ) : (
-            <button type="button" onClick={toggleSkillDialog}>
+            <button
+              type="button"
+              className="add-item"
+              onClick={toggleSkillDialog}
+            >
               + Add Skill
             </button>
           )}
@@ -274,26 +304,30 @@ export default function Editor({ data, setData, activeSection }) {
       )}
       {activeSection.title === "Work Experience" && (
         <div className="section experience">
-          <h2>Work Experience</h2>
+          <h2 className="section-title">Work Experience</h2>
           <ul>
             {data.experience.map((experienceItem) => (
-              <li className="experience-item" key={experienceItem.id}>
+              <li className="experience-item item card" key={experienceItem.id}>
                 <p className="position">{experienceItem.position}</p>
                 <p className="organization">{experienceItem.organization}</p>
-                <div className="tenure">
-                  <p>
-                    {formatTenureBoundary(experienceItem.startDate)} -{" "}
-                    {experienceItem.completed
-                      ? formatTenureBoundary(experienceItem.endDate)
-                      : "Present"}
-                  </p>
-                </div>
-                <div className="location">
-                  <p>
-                    {experienceItem.type === "onsite"
-                      ? experienceItem.location
-                      : "Remote"}
-                  </p>
+                <div className="spacetime">
+                  <div className="tenure">
+                    <Calendar className="icon" />
+                    <p>
+                      {formatTenureBoundary(experienceItem.startDate)} -{" "}
+                      {experienceItem.completed
+                        ? formatTenureBoundary(experienceItem.endDate)
+                        : "Present"}
+                    </p>
+                  </div>
+                  <div className="location">
+                    <MapPin className="icon" />
+                    <p>
+                      {experienceItem.type === "onsite"
+                        ? experienceItem.location
+                        : "Remote"}
+                    </p>
+                  </div>
                 </div>
                 <ul className="accomplishments">
                   {experienceItem.accomplishments.map((accomplishmentItem) => (
@@ -304,6 +338,7 @@ export default function Editor({ data, setData, activeSection }) {
                 </ul>
                 <button
                   type="button"
+                  className="item-action remove-button"
                   onClick={() => {
                     setData({
                       ...data,
@@ -313,20 +348,22 @@ export default function Editor({ data, setData, activeSection }) {
                     });
                   }}
                 >
-                  Remove
+                  <Trash className="icon" />
                 </button>
               </li>
             ))}
           </ul>
           {showExperienceDialog ? (
-            <form className="new-experience">
-              <h3>Add Experience</h3>
+            <form className="new-experience new-item card">
+              <h2>Add Experience</h2>
               <label>
                 <p>Position</p>
                 <input
                   type="text"
                   name="new-experience-position"
                   id="new-experience-position"
+                  className="placeholder-labelled"
+                  placeholder=""
                   required
                   value={newExperiencePosition}
                   onChange={(event) =>
@@ -340,6 +377,8 @@ export default function Editor({ data, setData, activeSection }) {
                   type="text"
                   name="new-experience-organization"
                   id="new-experience-organization"
+                  className="placeholder-labelled"
+                  placeholder=""
                   required
                   value={newExperienceOrganization}
                   onChange={(event) =>
@@ -347,10 +386,39 @@ export default function Editor({ data, setData, activeSection }) {
                   }
                 />
               </label>
-              <div className="new-experience-tenure">
-                <h4>Tenure</h4>
+              <label className="misc-input">
+                <p>Employment Type:</p>
+                <select
+                  name="new-experience-type"
+                  id="new-experience-type"
+                  value={newExperienceType}
+                  onChange={(event) => setNewExperienceType(event.target.value)}
+                >
+                  <option value="onsite">On-Site</option>
+                  <option value="remote">Remote</option>
+                </select>
+              </label>
+              {newExperienceType === "onsite" && (
                 <label>
-                  <p>From</p>
+                  <p>Location</p>
+                  <input
+                    type="text"
+                    name="new-experience-location"
+                    id="new-experience-location"
+                    className="placeholder-labelled"
+                    placeholder=""
+                    required
+                    value={newExperienceLocation}
+                    onChange={(event) =>
+                      setNewExperienceLocation(event.target.value)
+                    }
+                  />
+                </label>
+              )}
+              <div className="new-experience-tenure">
+                <h3>Tenure</h3>
+                <label className="misc-input">
+                  <p>From:</p>
                   <input
                     type="date"
                     name="new-experience-start"
@@ -362,11 +430,12 @@ export default function Editor({ data, setData, activeSection }) {
                     }
                   />
                 </label>
-                <label>
-                  <p>To</p>
+                <label className="misc-input">
+                  <p>To:</p>
                   <select
                     name="new-experience-completed"
                     id="new-experience-completed"
+                    className="completed-input"
                     value={newExperienceCompleted}
                     onChange={(event) =>
                       setNewExperienceCompleted(event.target.value)
@@ -388,124 +457,124 @@ export default function Editor({ data, setData, activeSection }) {
                   )}
                 </label>
               </div>
-              <label>
-                <p>Location</p>
-                <select
-                  name="new-experience-type"
-                  id="new-experience-type"
-                  value={newExperienceType}
-                  onChange={(event) => setNewExperienceType(event.target.value)}
-                >
-                  <option value="onsite">On-Site</option>
-                  <option value="remote">Remote</option>
-                </select>
-                {newExperienceType === "onsite" && (
-                  <input
-                    type="text"
-                    name="new-experience-location"
-                    id="new-experience-location"
-                    required
-                    value={newExperienceLocation}
-                    onChange={(event) =>
-                      setNewExperienceLocation(event.target.value)
-                    }
-                  />
-                )}
-              </label>
+
               <div className="new-experience-accomplishments">
-                <h4>Accomplishments</h4>
+                <h3>Accomplishments</h3>
                 <ul>
                   {newExperienceAccomplishments.map((accomplishmentItem) => (
                     <li key={accomplishmentItem.id}>
-                      <p>{accomplishmentItem.accomplishment}</p>
-                      <button
-                        type="button"
-                        onClick={() => {
-                          setNewExperienceAccomplishments(
-                            newExperienceAccomplishments.filter(
-                              (newExperienceAccomplishment) =>
-                                newExperienceAccomplishment.id !==
-                                accomplishmentItem.id,
-                            ),
-                          );
-                        }}
-                      >
-                        Remove
-                      </button>
+                      <div className="new-experience-accomplishment">
+                        <p>{accomplishmentItem.accomplishment}</p>
+                        <button
+                          type="button"
+                          className="item-action remove-button"
+                          onClick={() => {
+                            setNewExperienceAccomplishments(
+                              newExperienceAccomplishments.filter(
+                                (newExperienceAccomplishment) =>
+                                  newExperienceAccomplishment.id !==
+                                  accomplishmentItem.id,
+                              ),
+                            );
+                          }}
+                        >
+                          <Trash className="icon" />
+                        </button>
+                      </div>
                     </li>
                   ))}
                 </ul>
                 {showAccomplishmentDialog ? (
-                  <div className="new-accomplishment">
-                    <h5>Add Accomplishment</h5>
-                    <textarea
-                      name="new-accomplishment"
-                      id="new-accomplishmet"
-                      required
-                      value={newExperienceNewAccomplishment}
-                      onChange={(event) =>
-                        setNewExperienceNewAccomplishment(event.target.value)
-                      }
-                    ></textarea>
-                    <button
-                      type="button"
-                      disabled={!checkAccomplishmentValidity()}
-                      onClick={() => {
-                        const updatedNewExperienceAccomplishments = [
-                          ...newExperienceAccomplishments,
-                        ];
-                        updatedNewExperienceAccomplishments.push({
-                          id: crypto.randomUUID(),
-                          accomplishment: newExperienceNewAccomplishment,
-                        });
-                        setNewExperienceAccomplishments(
-                          updatedNewExperienceAccomplishments,
-                        );
+                  <div className="new-accomplishment new-item card">
+                    <h4>Add Accomplishment</h4>
+                    <label>
+                      <p>Accomplishment</p>
+                      <TextareaAutosize
+                        name="new-accomplishment"
+                        id="new-accomplishmet"
+                        className="placeholder-labelled"
+                        placeholder=""
+                        required
+                        value={newExperienceNewAccomplishment}
+                        onChange={(event) =>
+                          setNewExperienceNewAccomplishment(event.target.value)
+                        }
+                      />
+                    </label>
+                    <div className="new-item-actions">
+                      <button
+                        type="button"
+                        disabled={!checkAccomplishmentValidity()}
+                        onClick={() => {
+                          const updatedNewExperienceAccomplishments = [
+                            ...newExperienceAccomplishments,
+                          ];
+                          updatedNewExperienceAccomplishments.push({
+                            id: crypto.randomUUID(),
+                            accomplishment: newExperienceNewAccomplishment,
+                          });
+                          setNewExperienceAccomplishments(
+                            updatedNewExperienceAccomplishments,
+                          );
 
-                        toggleAccomplishmentsDialog();
-                      }}
-                    >
-                      Add
-                    </button>
-                    <button type="button" onClick={toggleAccomplishmentsDialog}>
-                      Cancel
-                    </button>
+                          toggleAccomplishmentsDialog();
+                        }}
+                      >
+                        Add
+                      </button>
+                      <button
+                        type="button"
+                        onClick={toggleAccomplishmentsDialog}
+                      >
+                        Cancel
+                      </button>
+                    </div>
                   </div>
                 ) : (
-                  <button type="button" onClick={toggleAccomplishmentsDialog}>
+                  <button
+                    type="button"
+                    className="add-item"
+                    onClick={toggleAccomplishmentsDialog}
+                  >
                     + Add Accomplishment
                   </button>
                 )}
               </div>
-              <button
-                type="button"
-                disabled={!checkExperienceValidity()}
-                onClick={() => {
-                  const newExperienceList = [...data.experience];
-                  newExperienceList.push({
-                    id: crypto.randomUUID(),
-                    position: newExperiencePosition,
-                    organization: newExperienceOrganization,
-                    startDate: newExperienceStartDate,
-                    endDate: newExperienceEndDate,
-                    completed: newExperienceCompleted === "completed",
-                    location: newExperienceLocation,
-                    type: newExperienceType,
-                    accomplishments: newExperienceAccomplishments,
-                  });
-                  setData({ ...data, experience: newExperienceList });
+              <div className="new-item-actions">
+                <button
+                  type="button"
+                  disabled={!checkExperienceValidity()}
+                  onClick={() => {
+                    const newExperienceList = [...data.experience];
+                    newExperienceList.push({
+                      id: crypto.randomUUID(),
+                      position: newExperiencePosition,
+                      organization: newExperienceOrganization,
+                      startDate: newExperienceStartDate,
+                      endDate: newExperienceEndDate,
+                      completed: newExperienceCompleted === "completed",
+                      location: newExperienceLocation,
+                      type: newExperienceType,
+                      accomplishments: newExperienceAccomplishments,
+                    });
+                    setData({ ...data, experience: newExperienceList });
 
-                  toggleExperienceDialog();
-                }}
-              >
-                Add
-              </button>
-              <button type="button" onClick={toggleExperienceDialog}>
-                Cancel
-              </button>
+                    toggleExperienceDialog();
+                  }}
+                >
+                  Add
+                </button>
+                <button type="button" onClick={toggleExperienceDialog}>
+                  Cancel
+                </button>
+              </div>
             </form>
           ) : (
-            <button type="button" onClick={toggleExperienceDialog}>
+            <button
+              type="button"
+              className="add-item"
+              onClick={toggleExperienceDialog}
+            >
               + Add Work Experience
             </button>
           )}
@@ -513,25 +582,30 @@ export default function Editor({ data, setData, activeSection }) {
       )}
       {activeSection.title === "Education" && (
         <div className="section">
-          <h2>Education</h2>
+          <h2 className="section-title">Education</h2>
           <ul>
             {data.education.map((educationItem) => (
-              <li className="education-item" key={educationItem.id}>
+              <li className="education-item item card" key={educationItem.id}>
                 <p className="degree">{educationItem.degree}</p>
                 <p className="institution">{educationItem.institution}</p>
-                <div className="tenure">
-                  <p>
-                    {formatTenureBoundary(educationItem.startDate)} -{" "}
-                    {educationItem.completed
-                      ? formatTenureBoundary(educationItem.endDate)
-                      : "Present"}
-                  </p>
-                </div>
-                <div className="location">
-                  <p>{educationItem.location}</p>
+                <div className="spacetime">
+                  <div className="tenure">
+                    <Calendar className="icon" />
+                    <p>
+                      {formatTenureBoundary(educationItem.startDate)} -{" "}
+                      {educationItem.completed
+                        ? formatTenureBoundary(educationItem.endDate)
+                        : "Present"}
+                    </p>
+                  </div>
+                  <div className="location">
+                    <MapPin className="icon" />
+                    <p>{educationItem.location}</p>
+                  </div>
                 </div>
                 <button
                   type="button"
+                  className="item-action remove-button"
                   onClick={() => {
                     setData({
                       ...data,
@@ -541,20 +615,22 @@ export default function Editor({ data, setData, activeSection }) {
                     });
                   }}
                 >
-                  Remove
+                  <Trash className="icon" />
                 </button>
               </li>
             ))}
           </ul>
           {showEducationDialog ? (
-            <form className="new-degree">
-              <h3>Add Degree</h3>
+            <form className="new-degree new-item card">
+              <h2>Add Degree</h2>
               <label>
                 <p>Degree</p>
                 <input
                   type="text"
                   name="new-degree-name"
                   id="new-degree-name"
+                  className="placeholder-labelled"
+                  placeholder=""
                   required
                   value={newEducationDegree}
                   onChange={(event) =>
@@ -568,6 +644,8 @@ export default function Editor({ data, setData, activeSection }) {
                   type="text"
                   name="new-degree-institution"
                   id="new-degree-institution"
+                  className="placeholder-labelled"
+                  placeholder=""
                   required
                   value={newEducationInstitution}
                   onChange={(event) =>
@@ -575,14 +653,30 @@ export default function Editor({ data, setData, activeSection }) {
                   }
                 />
               </label>
+              <label>
+                <p>Location</p>
+                <input
+                  type="text"
+                  name="new-degree-location"
+                  id="new-degree-location"
+                  className="placeholder-labelled"
+                  placeholder=""
+                  required
+                  value={newEducationLocation}
+                  onChange={(event) =>
+                    setNewEducationLocation(event.target.value)
+                  }
+                />
+              </label>
               <div className="new-degree-tenure">
-                <h4>Tenure</h4>
-                <label>
-                  <p>From</p>
+                <h3>Tenure</h3>
+                <label className="misc-input">
+                  <p>From:</p>
                   <input
                     type="date"
                     name="new-degree-start"
                     id="new-degree-start"
+                    placeholder=""
                     required
                     value={newEducationStartDate}
                     onChange={(event) =>
@@ -590,11 +684,12 @@ export default function Editor({ data, setData, activeSection }) {
                     }
                   />
                 </label>
-                <label>
-                  <p>To</p>
+                <label className="misc-input">
+                  <p>To:</p>
                   <select
                     name="new-degree-completed"
                     id="new-degree-completed"
+                    className="completed-input"
                     value={newEducationCompleted}
                     onChange={(event) =>
                       setNewEducationCompleted(event.target.value)
@@ -608,6 +703,7 @@ export default function Editor({ data, setData, activeSection }) {
                       type="date"
                       name="new-degree-end"
                       id="new-degree-end"
+                      placeholder=""
                       value={newEducationEndDate}
                       onChange={(event) =>
                         setNewEducationEndDate(event.target.value)
@@ -616,52 +712,46 @@ export default function Editor({ data, setData, activeSection }) {
                   )}
                 </label>
               </div>
-              <label>
-                <p>Location</p>
-                <input
-                  type="text"
-                  name="new-degree-location"
-                  id="new-degree-location"
-                  required
-                  value={newEducationLocation}
-                  onChange={(event) =>
-                    setNewEducationLocation(event.target.value)
-                  }
-                />
-              </label>
-              <button
-                type="button"
-                disabled={!checkEducationValidity()}
-                onClick={() => {
-                  const newEducationList = [...data.education];
-                  newEducationList.push({
-                    id: crypto.randomUUID(),
-                    degree: newEducationDegree,
-                    institution: newEducationInstitution,
-                    startDate: newEducationStartDate,
-                    endDate: newEducationEndDate,
-                    completed: newEducationCompleted === "completed",
-                    location: newEducationLocation,
-                  });
-                  setData({ ...data, education: newEducationList });
 
-                  toggleEducationDialog();
-                }}
-              >
-                Add
-              </button>
-              <button type="button" onClick={toggleEducationDialog}>
-                Cancel
-              </button>
+              <div className="new-item-actions">
+                <button
+                  type="button"
+                  disabled={!checkEducationValidity()}
+                  onClick={() => {
+                    const newEducationList = [...data.education];
+                    newEducationList.push({
+                      id: crypto.randomUUID(),
+                      degree: newEducationDegree,
+                      institution: newEducationInstitution,
+                      startDate: newEducationStartDate,
+                      endDate: newEducationEndDate,
+                      completed: newEducationCompleted === "completed",
+                      location: newEducationLocation,
+                    });
+                    setData({ ...data, education: newEducationList });
+
+                    toggleEducationDialog();
+                  }}
+                >
+                  Add
+                </button>
+                <button type="button" onClick={toggleEducationDialog}>
+                  Cancel
+                </button>
+              </div>
             </form>
           ) : (
-            <button type="button" onClick={toggleEducationDialog}>
+            <button
+              type="button"
+              className="add-item"
+              onClick={toggleEducationDialog}
+            >
               + Add Degree
             </button>
           )}
         </div>
       )}
-    </>
+    </div>
   );
 }
 

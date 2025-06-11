@@ -1,14 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Bree+Serif&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 
-ul {
-  padding: 0;
-}
-
-li {
-  list-style: none;
-}
-
 .cv {
   background-color: white;
   color: #2f2f2f;
@@ -17,11 +9,19 @@ li {
   font-family: Poppins, sans-serif;
 }
 
-.section {
+.cv ul {
+  padding: 0;
+}
+
+.cv li {
+  list-style: none;
+}
+
+.cv .section {
   margin-bottom: 8px;
 }
 
-.heading {
+.cv .heading {
   font-family: "Bree Serif", serif;
   font-size: 1.75em;
   font-weight: bold;
@@ -29,31 +29,31 @@ li {
   border-bottom: 2px solid #000000;
 }
 
-.content {
+.cv .content {
   padding: 4px 0;
 }
 
-.info {
+.cv .info {
   display: flex;
   align-items: center;
 }
 
-.details {
+.cv .details {
   display: flex;
 }
 
-.details .info {
+.cv .details .info {
   margin-right: 24px;
 }
 
-.icon {
+.cv .icon {
   margin-right: 4px;
   color: #0000ff;
   width: 8px;
   height: auto;
 }
 
-.name {
+.cv .name {
   font-family: "Bree Serif", serif;
   font-size: 2.5em;
   font-weight: bold;
@@ -61,14 +61,14 @@ li {
   text-transform: uppercase;
 }
 
-.role {
+.cv .role {
   font-family: "Bree Serif", serif;
   font-size: 1.5em;
   font-weight: bold;
   color: #0000ff;
 }
 
-.personal {
+.cv .personal {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
 
@@ -76,12 +76,12 @@ li {
   color: #1e1e1e;
 }
 
-.skills ul {
+.cv .skills ul {
   display: flex;
   flex-wrap: wrap;
 }
 
-.skills li {
+.cv .skills li {
   width: max-content;
 
   font-weight: bold;
@@ -92,44 +92,44 @@ li {
   color: #1e1e1e;
 }
 
-.experience .item {
+.cv .experience .item {
   padding-bottom: 4px;
   border-bottom: 1px dashed lightgray;
   margin-bottom: 4px;
 }
 
-.experience .item:last-child {
+.cv .experience .item:last-child {
   border: none;
 }
 
-.position {
+.cv .position {
   font-family: "Bree Serif", serif;
   font-size: 1.5em;
   font-weight: bold;
   color: #1e1e1e;
 }
 
-.organization {
+.cv .organization {
   font-size: 1.1em;
   font-weight: bold;
   color: #0000ff;
 }
 
-ul.accomplishments {
+.cv ul.accomplishments {
   padding-left: 12px;
 }
 
-.accomplishments li {
+.cv .accomplishments li {
   list-style: disc;
 }
 
-.degree {
+.cv .degree {
   font-family: "Bree Serif", serif;
   font-size: 1.5em;
   color: #1e1e1e;
 }
 
-.institution {
+.cv .institution {
   font-size: 1.1em;
   font-weight: bold;
   color: #0000ff;

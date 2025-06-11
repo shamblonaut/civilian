@@ -1,9 +1,12 @@
 .viewport {
-  width: min-content;
-  border: 2px solid #000000;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .viewport .cv {
+  border: 2px solid #000000;
   height: 750px;
   aspect-ratio: 1 / 1.414;
   overflow-y: scroll;
