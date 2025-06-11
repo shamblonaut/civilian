@@ -223,7 +223,13 @@ function App() {
         {showCV ? (
           <Viewport data={data} />
         ) : (
-          <Editor data={data} setData={setData} activeSection={activeSection} />
+          <Editor
+            data={data}
+            setData={setData}
+            sections={sections}
+            activeSection={activeSection}
+            setActiveSection={setActiveSection}
+          />
         )}
       </main>
     </>

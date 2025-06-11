@@ -12,7 +12,13 @@ import {
 
 import { formatTenureBoundary, getISODate } from "../utils.js";
 
-export default function Editor({ data, setData, activeSection }) {
+export default function Editor({
+  data,
+  setData,
+  sections,
+  activeSection,
+  setActiveSection,
+}) {
   // Input States
   const [showSkillDialog, setShowSkillDialog] = useState(false);
   const [newSkill, setNewSkill] = useState("");
@@ -43,6 +49,14 @@ export default function Editor({ data, setData, activeSection }) {
   const [newEducationCompleted, setNewEducationCompleted] =
     useState("completed");
   const [newEducationLocation, setNewEducationLocation] = useState("");
+
+  function getActiveSectionIndex() {
+    for (let i = 0; i < sections.length; i++) {
+      if (activeSection.id === sections[i].id) {
+        return i;
+      }
+    }
+  }
 
   function toggleSkillDialog() {
     setNewSkill("");
@@ -776,6 +790,34 @@ export default function Editor({ data, setData, activeSection }) {
           )}
         </div>
       )}
+
+      <div className="section-navigator">
+        {getActiveSectionIndex() !== 0 && (
+          <button
+            type="button"
+            className="previous"
+            onClick={() => {
+              setActiveSection(sections[getActiveSectionIndex() - 1]);
+            }}
+          >
+            <ChevronLeft className="icon" />
+            <p>Previous</p>
+          </button>
+        )}
+        {getActiveSectionIndex() !== sections.length - 1 && (
+          <button
+            type="button"
+            className="next"
+            onClick={() => {
+              setActiveSection(sections[getActiveSectionIndex() + 1]);
+            }}
+          >
+            <p>Next</p>
+            <ChevronRight className="icon" />
+          </button>
+        )}
+      </div>
+    </div>
   );
 }
 
