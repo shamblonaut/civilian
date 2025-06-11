@@ -3,8 +3,10 @@ import "../styles/Navigator.css";
 export default function Navigator({
   sections,
   setActiveSection,
+  setData,
   showCV,
   setShowCV,
+  loadExample,
 }) {
   return (
     <nav>
@@ -26,14 +28,22 @@ export default function Navigator({
         </ul>
       </div>
 
-      <button
-        className="cv-reveal"
-        type="button"
-        disabled={showCV}
-        onClick={() => setShowCV(true)}
-      >
-        View CV
-      </button>
+      <div className="app-actions">
+        <button className="load-example" type="button" onClick={loadExample}>
+          Load Example
+        </button>
+        <button className="cv-clear" type="button" onClick={() => setData({})}>
+          Clear CV
+        </button>
+        <button
+          className="cv-reveal"
+          type="button"
+          disabled={showCV}
+          onClick={() => setShowCV(true)}
+        >
+          View CV
+        </button>
+      </div>
     </nav>
   );
 }

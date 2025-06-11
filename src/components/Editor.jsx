@@ -125,7 +125,7 @@ export default function Editor({ data, setData, activeSection }) {
                 className="placeholder-labelled"
                 placeholder=""
                 required
-                value={data.name}
+                value={data.name || ""}
                 onChange={(event) =>
                   setData({ ...data, name: event.target.value })
                 }
@@ -140,7 +140,7 @@ export default function Editor({ data, setData, activeSection }) {
                 className="placeholder-labelled"
                 placeholder=""
                 required
-                value={data.phone}
+                value={data.phone || ""}
                 onChange={(event) =>
                   setData({ ...data, phone: event.target.value })
                 }
@@ -155,7 +155,7 @@ export default function Editor({ data, setData, activeSection }) {
                 className="placeholder-labelled"
                 placeholder=""
                 required
-                value={data.email}
+                value={data.email || ""}
                 onChange={(event) =>
                   setData({ ...data, email: event.target.value })
                 }
@@ -169,7 +169,7 @@ export default function Editor({ data, setData, activeSection }) {
                 id="website"
                 className="placeholder-labelled"
                 placeholder=""
-                value={data.website}
+                value={data.website || ""}
                 onChange={(event) =>
                   setData({ ...data, website: event.target.value })
                 }
@@ -184,7 +184,7 @@ export default function Editor({ data, setData, activeSection }) {
                 className="placeholder-labelled"
                 placeholder=""
                 required
-                value={data.location}
+                value={data.location || ""}
                 onChange={(event) =>
                   setData({ ...data, location: event.target.value })
                 }
@@ -206,7 +206,7 @@ export default function Editor({ data, setData, activeSection }) {
                 className="placeholder-labelled"
                 placeholder=""
                 required
-                value={data.role}
+                value={data.role || ""}
                 onChange={(event) =>
                   setData({ ...data, role: event.target.value })
                 }
@@ -220,7 +220,7 @@ export default function Editor({ data, setData, activeSection }) {
                 className="placeholder-labelled"
                 placeholder=""
                 required
-                value={data.summary}
+                value={data.summary || ""}
                 onChange={(event) =>
                   setData({ ...data, summary: event.target.value })
                 }

@@ -38,7 +38,8 @@ nav a:hover {
   list-style: none;
 }
 
-.cv-reveal {
+.app-actions button {
   width: 100%;
   padding: 16px;
+  margin-top: 8px;
 }
