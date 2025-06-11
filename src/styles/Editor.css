@@ -17,6 +17,10 @@
   align-items: center;
 }
 
+.editor .section-title {
+  margin-top: 16px;
+}
+
 .add-item {
   padding: 8px 16px;
   margin: 16px;
@@ -128,6 +132,7 @@
 }
 
 .editor .item {
+  max-width: 80%;
   padding-right: 64px;
 }
 
@@ -236,6 +241,17 @@
 }
 
 /* Experience */
+.editor .section.experience > ul {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.experience-item {
+  width: 80%;
+}
+
 .experience-item .position {
   font-size: 1.5em;
   font-weight: bold;
@@ -293,6 +309,17 @@
 }
 
 /* Education */
+.editor .section.education > ul {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.education-item {
+  width: 80%;
+}
+
 .education-item .degree {
   font-size: 1.5em;
   color: #1e1e1e;

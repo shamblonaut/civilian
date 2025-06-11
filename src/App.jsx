@@ -214,18 +214,21 @@ function App() {
 
   return (
     <>
-      <header>
-        <h1>CIVILIAN</h1>
-      </header>
-      <Navigator
-        sections={sections}
-        setActiveSection={setActiveSection}
-        showCV={showCV}
-        setShowCV={setShowCV}
-        checkCVValidity={checkCVValidity}
-        loadExample={loadExample}
-        clearCV={clearCV}
-      />
+      <div className="sidebar">
+        <header>
+          <img src="/cv.svg" alt="Civilian Logo" />
+          <h1>CIVILIAN</h1>
+        </header>
+        <Navigator
+          sections={sections}
+          setActiveSection={setActiveSection}
+          showCV={showCV}
+          setShowCV={setShowCV}
+          checkCVValidity={checkCVValidity}
+          loadExample={loadExample}
+          clearCV={clearCV}
+        />
+      </div>
       <main>
         {showCV ? (
           <Viewport data={data} />
