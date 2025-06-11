@@ -3,7 +3,6 @@ import "../styles/Navigator.css";
 export default function Navigator({
   sections,
   setActiveSection,
-  setData,
   showCV,
   setShowCV,
   checkCVValidity,
@@ -40,13 +39,18 @@ export default function Navigator({
         <button
           className="cv-reveal"
           type="button"
-          disabled={showCV}
           onClick={() => {
+            if (showCV) {
+              setShowCV(false);
+              setActiveSection(sections[0]);
+              return;
+            }
+
             if (!checkCVValidity()) return;
             setShowCV(true);
           }}
         >
-          View CV
+          {showCV ? "Edit CV" : "View CV"}
         </button>
       </div>
     </nav>

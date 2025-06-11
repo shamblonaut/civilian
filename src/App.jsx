@@ -220,7 +220,6 @@ function App() {
       <Navigator
         sections={sections}
         setActiveSection={setActiveSection}
-        setData={setData}
         showCV={showCV}
         setShowCV={setShowCV}
         checkCVValidity={checkCVValidity}
