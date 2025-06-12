@@ -6,18 +6,27 @@ export default function Navigator({
   showCV,
   setShowCV,
   checkCVValidity,
+  revealCV,
   loadExample,
   clearCV,
+  menuHidden,
+  setMenuHidden,
 }) {
   return (
-    <nav>
-      <div className="sections">
+    <>
+      <nav className={`sections ${menuHidden && "vertical-hidden"}`}>
         <h1>Sections</h1>
         <ul>
           {sections.map((section) => (
             <li key={section.id}>
               <a
                 onClick={() => {
+                  setMenuHidden(true);
+
+                  if (!checkCVValidity(true, false, true)) {
+                    return;
+                  }
+
                   setActiveSection(section);
                   setShowCV(false);
                 }}
@@ -27,32 +36,35 @@ export default function Navigator({
             </li>
           ))}
         </ul>
-      </div>
+      </nav>
 
-      <div className="app-actions">
-        <button className="load-example" type="button" onClick={loadExample}>
-          Load Example
-        </button>
-        <button className="cv-clear" type="button" onClick={clearCV}>
-          Clear CV
-        </button>
+      <div className={`app-actions ${menuHidden && "vertical-hidden"}`}>
         <button
-          className="cv-reveal"
+          className="load-example"
           type="button"
           onClick={() => {
-            if (showCV) {
-              setShowCV(false);
-              setActiveSection(sections[0]);
-              return;
-            }
-
-            if (!checkCVValidity()) return;
-            setShowCV(true);
+            loadExample();
+            setMenuHidden(true);
           }}
         >
-          {showCV ? "Edit CV" : "View CV"}
+          Load Example
         </button>
+        <button
+          className="cv-clear"
+          type="button"
+          onClick={() => {
+            clearCV();
+            setMenuHidden(true);
+          }}
+        >
+          Clear CV
+        </button>
+        {(checkCVValidity() || showCV) && (
+          <button type="button" className="cv-reveal" onClick={revealCV}>
+            <p>{showCV ? "Edit CV" : "View CV"}</p>
+          </button>
+        )}
       </div>
-    </nav>
+    </>
   );
 }

@@ -18,6 +18,8 @@ export default function Editor({
   sections,
   activeSection,
   setActiveSection,
+  checkCVValidity,
+  revealCV,
 }) {
   // Input States
   const [showSkillDialog, setShowSkillDialog] = useState(false);
@@ -133,7 +135,7 @@ export default function Editor({
   return (
     <div className="editor">
       {activeSection.title === "Personal Information" && (
-        <div className="section">
+        <div className="section personal-info">
           <h2 className="section-title">Personal Information</h2>
           <form>
             <label>
@@ -226,7 +228,7 @@ export default function Editor({
         </div>
       )}
       {activeSection.title === "Professional Summary" && (
-        <div className="section">
+        <div className="section professional-info">
           <h2 className="section-title">Professional Summary</h2>
           <form>
             <label>
@@ -622,7 +624,7 @@ export default function Editor({
         </div>
       )}
       {activeSection.title === "Education" && (
-        <div className="section">
+        <div className="section education">
           <h2 className="section-title">Education</h2>
           {data.education && data.education.length > 0 && (
             <ul>
@@ -797,6 +799,9 @@ export default function Editor({
             type="button"
             className="previous"
             onClick={() => {
+              if (!checkCVValidity(true, false, true)) {
+                return;
+              }
               setActiveSection(sections[getActiveSectionIndex() - 1]);
             }}
           >
@@ -804,17 +809,26 @@ export default function Editor({
             <p>Previous</p>
           </button>
         )}
-        {getActiveSectionIndex() !== sections.length - 1 && (
+        {getActiveSectionIndex() !== sections.length - 1 ? (
           <button
             type="button"
             className="next"
             onClick={() => {
+              if (!checkCVValidity(true, false, true)) {
+                return;
+              }
               setActiveSection(sections[getActiveSectionIndex() + 1]);
             }}
           >
             <p>Next</p>
             <ChevronRight className="icon" />
           </button>
+        ) : (
+          checkCVValidity() && (
+            <button type="button" className="next cv-reveal" onClick={revealCV}>
+              <p>View CV</p>
+            </button>
+          )
         )}
       </div>
     </div>

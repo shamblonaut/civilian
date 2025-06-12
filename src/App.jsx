@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { Menu, X } from "lucide-react";
+
 import "./App.css";
 
 import Navigator from "./components/Navigator.jsx";
@@ -174,6 +176,7 @@ function App() {
 
   const [activeSection, setActiveSection] = useState(sections[0]);
   const [showCV, setShowCV] = useState(false);
+  const [menuHidden, setMenuHidden] = useState(true);
 
   function loadExample() {
     setData(exampleCV);
@@ -189,33 +192,62 @@ function App() {
     });
   }
 
-  function checkCVValidity() {
+  function checkCVValidity(
+    highlight = false,
+    redirect = false,
+    onlyActiveSection = false,
+  ) {
     let valid = true;
 
     if (!data.name || !data.phone || !data.email || !data.location) {
-      setActiveSection(sections[0]);
-      valid = false;
+      if (redirect) {
+        setActiveSection(sections[0]);
+      }
+      if (!onlyActiveSection || activeSection === sections[0]) valid = false;
     } else if (!data.role || !data.summary) {
-      setActiveSection(sections[1]);
-      valid = false;
+      if (redirect) {
+        setActiveSection(sections[1]);
+      }
+      if (!onlyActiveSection || activeSection === sections[1]) valid = false;
     }
 
-    document.querySelectorAll(":required").forEach((input) => {
-      if (input.value === "") {
-        input.classList.add("error-required");
-        valid = false;
-      } else {
-        input.classList.remove("error-required");
-      }
-    });
+    if (highlight) {
+      document.querySelectorAll(":required").forEach((input) => {
+        if (input.value === "") {
+          input.classList.add("error-required");
+        } else {
+          input.classList.remove("error-required");
+        }
+      });
+    }
 
     return valid;
+  }
+
+  function revealCV() {
+    setMenuHidden(true);
+
+    if (showCV) {
+      setShowCV(false);
+      setActiveSection(sections[0]);
+      return;
+    }
+
+    if (!checkCVValidity()) return;
+
+    setShowCV(true);
   }
 
   return (
     <>
       <div className="sidebar">
         <header>
+          <div
+            className="menu-button"
+            onClick={() => setMenuHidden(!menuHidden)}
+          >
+            {menuHidden ? <Menu className="icon" /> : <X className="icon" />}
+          </div>
           <img src="/cv.svg" alt="Civilian Logo" />
           <h1>CIVILIAN</h1>
         </header>
@@ -225,8 +257,11 @@ function App() {
           showCV={showCV}
           setShowCV={setShowCV}
           checkCVValidity={checkCVValidity}
+          revealCV={revealCV}
           loadExample={loadExample}
           clearCV={clearCV}
+          menuHidden={menuHidden}
+          setMenuHidden={setMenuHidden}
         />
       </div>
       <main>
@@ -239,6 +274,8 @@ function App() {
             sections={sections}
             activeSection={activeSection}
             setActiveSection={setActiveSection}
+            checkCVValidity={checkCVValidity}
+            revealCV={revealCV}
           />
         )}
       </main>
