@@ -30,7 +30,10 @@ export default function Navigator({
                     return;
                   }
 
+                  // Navigate to selected section
                   setActiveSection(section);
+
+                  // Close CV page if open
                   setShowCV(false);
                 }}
               >

@@ -10,7 +10,7 @@ import {
   ChevronRight,
 } from "lucide-react";
 
-import { formatTenureBoundary, getISODate } from "../utils.js";
+import { formatTenureBoundary, validateRequiredInput } from "../utils.js";
 
 export default function Editor({
   data,
@@ -22,10 +22,12 @@ export default function Editor({
   toggleCV,
   showError,
 }) {
-  // Input States
+  /* ========= INPUT STATES ========= */
+  // Skills Section
   const [showSkillDialog, setShowSkillDialog] = useState(false);
   const [newSkill, setNewSkill] = useState("");
 
+  // Experience Section
   const [showExperienceDialog, setShowExperienceDialog] = useState(false);
   const [newExperiencePosition, setNewExperiencePosition] = useState("");
   const [newExperienceOrganization, setNewExperienceOrganization] =
@@ -39,11 +41,13 @@ export default function Editor({
   const [newExperienceAccomplishments, setNewExperienceAccomplishments] =
     useState([]);
 
+  // Experience Accomplishments
   const [showAccomplishmentDialog, setShowAccomplishmentDialog] =
     useState(false);
   const [newExperienceNewAccomplishment, setNewExperienceNewAccomplishment] =
     useState("");
 
+  // Education Section
   const [showEducationDialog, setShowEducationDialog] = useState(false);
   const [newEducationDegree, setNewEducationDegree] = useState("");
   const [newEducationInstitution, setNewEducationInstitution] = useState("");
@@ -53,14 +57,7 @@ export default function Editor({
     useState("completed");
   const [newEducationLocation, setNewEducationLocation] = useState("");
 
-  function getActiveSectionIndex() {
-    for (let i = 0; i < sections.length; i++) {
-      if (activeSection.id === sections[i].id) {
-        return i;
-      }
-    }
-  }
-
+  /* =========== HANDLERS =========== */
   function toggleSkillDialog() {
     setNewSkill("");
 
@@ -101,6 +98,15 @@ export default function Editor({
     setShowEducationDialog(!showEducationDialog);
   }
 
+  /* =========== HELPERS ============ */
+  function getActiveSectionIndex() {
+    for (let i = 0; i < sections.length; i++) {
+      if (activeSection.id === sections[i].id) {
+        return i;
+      }
+    }
+  }
+
   function checkSkillValidity() {
     return validateRequiredInput([newSkill]);
   }
@@ -133,6 +139,7 @@ export default function Editor({
     );
   }
 
+  /* =========== CONTENT ============ */
   return (
     <div className="editor">
       {activeSection.title === "Personal Information" && (
@@ -816,11 +823,4 @@ export default function Editor({
       </div>
     </div>
   );
-}
-
-function validateRequiredInput(inputValues) {
-  for (const inputValue of inputValues) {
-    if (inputValue === "") return false;
-  }
-  return true;
 }

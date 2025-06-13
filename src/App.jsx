@@ -8,6 +8,7 @@ import Navigator from "./components/Navigator.jsx";
 import Editor from "./components/Editor.jsx";
 import Viewport from "./components/Viewport.jsx";
 
+// Baseline object for initial state
 const emptyCV = {
   name: "",
   phone: "",
@@ -164,6 +165,7 @@ const exampleCV = {
   ],
 };
 
+// Section pages in the editor
 const sections = [
   { id: crypto.randomUUID(), title: "Personal Information" },
   { id: crypto.randomUUID(), title: "Professional Summary" },
@@ -173,14 +175,25 @@ const sections = [
 ];
 
 function App() {
+  /* ============ STATES ============ */
+  // Stores the data from all sections
   const [data, setData] = useState(emptyCV);
 
+  // The currently open section
   const [activeSection, setActiveSection] = useState(sections[0]);
+
+  // Whether the Hero page and CV page are displayed, respectively
   const [showHero, setShowHero] = useState(true);
   const [showCV, setShowCV] = useState(false);
+
+  // Whether "required input" error must be indicated
   const [showError, setShowError] = useState(false);
+
+  // Hamburger menu toggle on small screens
   const [menuHidden, setMenuHidden] = useState(true);
 
+  /* =========== HANDLERS =========== */
+  // Save data to local storage
   function saveCV() {
     if (JSON.stringify(data) === JSON.stringify(emptyCV)) {
       alert("What are you trying to save, exactly?");
@@ -201,12 +214,12 @@ function App() {
     alert("Your work has been successfully saved to local storage!");
   }
 
+  // Load saved data from local storage
   function loadCV() {
-    // Fetch data from local storage
     const loadedData = localStorage.getItem("data");
 
     if (!loadedData) {
-      alert("You do not have any saved work to load");
+      alert("You do not have any saved work to load!");
       return;
     }
 
@@ -221,20 +234,24 @@ function App() {
     setData(JSON.parse(loadedData));
   }
 
+  // Load example content
   function loadExample() {
     if (
       JSON.stringify(data) !== JSON.stringify(emptyCV) &&
       !confirm(
-        "Your current work will be lost. Do you want to continue? [You might want to try saving it]",
+        "Your current work will be lost. Do you want to continue? [You might want to try saving it!]",
       )
     ) {
       return;
     }
 
     setData(exampleCV);
+
+    // Clear error indicators
     setShowError(false);
   }
 
+  // Reset all sections to initial state
   function clearCV() {
     if (
       JSON.stringify(data) !== JSON.stringify(emptyCV) &&
@@ -244,25 +261,31 @@ function App() {
     }
 
     setData(emptyCV);
+
+    // Clear error indicators
     setShowError(false);
   }
 
+  // Check if required input is filled
   function checkCVValidity(
-    highlight = false,
-    redirect = false,
-    onlyActiveSection = false,
+    highlight = false, // Whether to indicate required input
+    redirect = false, // Whether to redirect to section with required input
+    onlyActiveSection = false, // Whether to check only the current section
   ) {
     let valid = true;
     let redirected = false;
 
+    // First section
     if (!data.name || !data.phone || !data.email || !data.location) {
       if (redirect) {
         setActiveSection(sections[0]);
         redirected = true;
       }
+
       if (!onlyActiveSection || activeSection === sections[0]) valid = false;
     }
 
+    // Second section
     if (!redirected && (!data.role || !data.summary)) {
       if (redirect) {
         setActiveSection(sections[1]);
@@ -281,9 +304,11 @@ function App() {
     return valid;
   }
 
+  // Reveal and hide the CV page
   function toggleCV() {
     setMenuHidden(true);
 
+    // If CV page is open, close it and move to first section
     if (showCV) {
       setShowCV(false);
       setActiveSection(sections[0]);
@@ -292,9 +317,11 @@ function App() {
 
     if (!checkCVValidity()) return;
 
+    // Open CV page
     setShowCV(true);
   }
 
+  /* =========== CONTENT ============ */
   if (showHero) {
     return <Hero setShowHero={setShowHero} />;
   } else {
