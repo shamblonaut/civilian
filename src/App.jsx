@@ -182,27 +182,67 @@ function App() {
   const [menuHidden, setMenuHidden] = useState(true);
 
   function saveCV() {
+    if (JSON.stringify(data) === JSON.stringify(emptyCV)) {
+      alert("What are you trying to save, exactly?");
+      return;
+    }
+
+    if (
+      localStorage.getItem("data") &&
+      !confirm(
+        "Your previous saved work will be overwritten. Do you want to continue?",
+      )
+    ) {
+      return;
+    }
+
     localStorage.setItem("data", JSON.stringify(data));
+
+    alert("Your work has been successfully saved to local storage!");
   }
 
   function loadCV() {
     // Fetch data from local storage
-    const loadedData = JSON.parse(localStorage.getItem("data"));
-    console.log(loadedData);
+    const loadedData = localStorage.getItem("data");
 
-    // Check if at least one of theintended values exist inside the object
-    if (loadedData.name) {
-      // Overwrite the current data with the loaded one
-      setData(loadedData);
+    if (!loadedData) {
+      alert("You do not have any saved work to load");
+      return;
     }
+
+    if (
+      JSON.stringify(data) !== JSON.stringify(emptyCV) &&
+      !confirm("Your current work will be lost. Do you want to continue?")
+    ) {
+      return;
+    }
+
+    // Overwrite the current data with the loaded one
+    setData(JSON.parse(loadedData));
   }
 
   function loadExample() {
+    if (
+      JSON.stringify(data) !== JSON.stringify(emptyCV) &&
+      !confirm(
+        "Your current work will be lost. Do you want to continue? [You might want to try saving it]",
+      )
+    ) {
+      return;
+    }
+
     setData(exampleCV);
     setShowError(false);
   }
 
   function clearCV() {
+    if (
+      JSON.stringify(data) !== JSON.stringify(emptyCV) &&
+      !confirm("Your current work will be lost. Do you want to continue?")
+    ) {
+      return;
+    }
+
     setData(emptyCV);
     setShowError(false);
   }
