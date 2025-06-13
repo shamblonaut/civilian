@@ -20,6 +20,7 @@ export default function Editor({
   setActiveSection,
   checkCVValidity,
   revealCV,
+  showError,
 }) {
   // Input States
   const [showSkillDialog, setShowSkillDialog] = useState(false);
@@ -144,15 +145,12 @@ export default function Editor({
                 type="text"
                 name="name"
                 id="name"
-                className="placeholder-labelled"
+                className={`placeholder-labelled ${showError && !data.name && "error-required"}`}
                 placeholder=""
                 required
                 value={data.name || ""}
                 onChange={(event) => {
                   setData({ ...data, name: event.target.value });
-                  document
-                    .getElementById("name")
-                    .classList.remove("error-required");
                 }}
               />
             </label>
@@ -162,15 +160,12 @@ export default function Editor({
                 type="tel"
                 name="phone"
                 id="phone"
-                className="placeholder-labelled"
+                className={`placeholder-labelled ${showError && !data.phone && "error-required"}`}
                 placeholder=""
                 required
                 value={data.phone || ""}
                 onChange={(event) => {
                   setData({ ...data, phone: event.target.value });
-                  document
-                    .getElementById("phone")
-                    .classList.remove("error-required");
                 }}
               />
             </label>
@@ -180,15 +175,12 @@ export default function Editor({
                 type="email"
                 name="email"
                 id="email"
-                className="placeholder-labelled"
+                className={`placeholder-labelled ${showError && !data.email && "error-required"}`}
                 placeholder=""
                 required
                 value={data.email || ""}
                 onChange={(event) => {
                   setData({ ...data, email: event.target.value });
-                  document
-                    .getElementById("email")
-                    .classList.remove("error-required");
                 }}
               />
             </label>
@@ -212,15 +204,12 @@ export default function Editor({
                 type="text"
                 name="personal-location"
                 id="personal-location"
-                className="placeholder-labelled"
+                className={`placeholder-labelled ${showError && !data.location && "error-required"}`}
                 placeholder=""
                 required
                 value={data.location || ""}
                 onChange={(event) => {
                   setData({ ...data, location: event.target.value });
-                  document
-                    .getElementById("personal-location")
-                    .classList.remove("error-required");
                 }}
               />
             </label>
@@ -237,15 +226,12 @@ export default function Editor({
                 type="text"
                 name="role"
                 id="role"
-                className="placeholder-labelled"
+                className={`placeholder-labelled ${showError && !data.role && "error-required"}`}
                 placeholder=""
                 required
                 value={data.role || ""}
                 onChange={(event) => {
                   setData({ ...data, role: event.target.value });
-                  document
-                    .getElementById("role")
-                    .classList.remove("error-required");
                 }}
               />
             </label>
@@ -254,15 +240,12 @@ export default function Editor({
               <TextareaAutosize
                 name="summary"
                 id="summary"
-                className="placeholder-labelled"
+                className={`placeholder-labelled ${showError && !data.summary && "error-required"}`}
                 placeholder=""
                 required
                 value={data.summary || ""}
                 onChange={(event) => {
                   setData({ ...data, summary: event.target.value });
-                  document
-                    .getElementById("summary")
-                    .classList.remove("error-required");
                 }}
               />
             </label>

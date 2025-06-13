@@ -178,20 +178,17 @@ function App() {
   const [activeSection, setActiveSection] = useState(sections[0]);
   const [showHero, setShowHero] = useState(true);
   const [showCV, setShowCV] = useState(false);
+  const [showError, setShowError] = useState(false);
   const [menuHidden, setMenuHidden] = useState(true);
 
   function loadExample() {
     setData(exampleCV);
-    document.querySelectorAll(":required").forEach((input) => {
-      input.classList.remove("error-required");
-    });
+    setShowError(false);
   }
 
   function clearCV() {
     setData(emptyCV);
-    document.querySelectorAll(":required").forEach((input) => {
-      input.classList.remove("error-required");
-    });
+    setShowError(false);
   }
 
   function checkCVValidity(
@@ -214,13 +211,11 @@ function App() {
     }
 
     if (highlight) {
-      document.querySelectorAll(":required").forEach((input) => {
-        if (input.value === "") {
-          input.classList.add("error-required");
-        } else {
-          input.classList.remove("error-required");
-        }
-      });
+      if (!valid) {
+        setShowError(true);
+      } else {
+        setShowError(false);
+      }
     }
 
     return valid;
@@ -281,6 +276,7 @@ function App() {
               setActiveSection={setActiveSection}
               checkCVValidity={checkCVValidity}
               revealCV={revealCV}
+              showError={showError}
             />
           )}
         </main>
