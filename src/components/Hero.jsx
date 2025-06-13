@@ -6,8 +6,8 @@ export default function Hero({ setShowHero }) {
   return (
     <>
       <header>
-        <img src="/cv.svg" alt="Civilian Logo" />
-        <h1>CIVILIAN</h1>
+        <img src="/cv.svg" alt="CVLIAN Logo" />
+        <h1>CVLIAN</h1>
       </header>
       <div className="hero">
         <div>

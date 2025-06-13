@@ -253,8 +253,8 @@ function App() {
             >
               {menuHidden ? <Menu className="icon" /> : <X className="icon" />}
             </div>
-            <img src="/cv.svg" alt="Civilian Logo" />
-            <h1>CIVILIAN</h1>
+            <img src="/cv.svg" alt="CVLIAN Logo" />
+            <h1>CVLIAN</h1>
           </header>
           <Navigator
             sections={sections}

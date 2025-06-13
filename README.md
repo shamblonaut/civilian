@@ -1,4 +1,4 @@
-# civilian
+# cvlian
 
 Create an enchanting CV with ease
 
