@@ -98,7 +98,7 @@ button:disabled {
   cursor: default;
 }
 
-.cv-reveal,
+.cv-toggle,
 .hero button {
   background-image: linear-gradient(135deg, #e64553, #8839ef);
   color: white;
@@ -108,7 +108,7 @@ button:disabled {
     rgba(255, 255, 255, 0.2) 0 -3px 0 inset;
 }
 
-.cv-reveal:hover,
+.cv-toggle:hover,
 .hero button:hover {
   box-shadow:
     rgba(0, 0, 0, 0.2) 0 4px 8px,

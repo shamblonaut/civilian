@@ -44,3 +44,8 @@ nav a:hover {
   padding: 16px;
   margin-top: 8px;
 }
+
+.viewport .cv-toggle {
+  margin-top: 16px;
+  padding: 8px 16px;
+}

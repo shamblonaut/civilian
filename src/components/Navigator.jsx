@@ -6,7 +6,7 @@ export default function Navigator({
   showCV,
   setShowCV,
   checkCVValidity,
-  revealCV,
+  toggleCV,
   loadExample,
   clearCV,
   menuHidden,
@@ -60,7 +60,7 @@ export default function Navigator({
           Clear CV
         </button>
         {(checkCVValidity() || showCV) && (
-          <button type="button" className="cv-reveal" onClick={revealCV}>
+          <button type="button" className="cv-toggle" onClick={toggleCV}>
             <p>{showCV ? "Edit CV" : "View CV"}</p>
           </button>
         )}

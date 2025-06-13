@@ -19,7 +19,7 @@ export default function Editor({
   activeSection,
   setActiveSection,
   checkCVValidity,
-  revealCV,
+  toggleCV,
   showError,
 }) {
   // Input States
@@ -808,7 +808,7 @@ export default function Editor({
           </button>
         ) : (
           checkCVValidity() && (
-            <button type="button" className="next cv-reveal" onClick={revealCV}>
+            <button type="button" className="next cv-toggle" onClick={toggleCV}>
               <p>View CV</p>
             </button>
           )

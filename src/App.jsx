@@ -221,7 +221,7 @@ function App() {
     return valid;
   }
 
-  function revealCV() {
+  function toggleCV() {
     setMenuHidden(true);
 
     if (showCV) {
@@ -257,7 +257,7 @@ function App() {
             showCV={showCV}
             setShowCV={setShowCV}
             checkCVValidity={checkCVValidity}
-            revealCV={revealCV}
+            toggleCV={toggleCV}
             loadExample={loadExample}
             clearCV={clearCV}
             menuHidden={menuHidden}
@@ -266,7 +266,7 @@ function App() {
         </div>
         <main>
           {showCV ? (
-            <Viewport data={data} />
+            <Viewport data={data} toggleCV={toggleCV} />
           ) : (
             <Editor
               data={data}
@@ -275,7 +275,7 @@ function App() {
               activeSection={activeSection}
               setActiveSection={setActiveSection}
               checkCVValidity={checkCVValidity}
-              revealCV={revealCV}
+              toggleCV={toggleCV}
               showError={showError}
             />
           )}
