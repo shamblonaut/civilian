@@ -197,13 +197,17 @@ function App() {
     onlyActiveSection = false,
   ) {
     let valid = true;
+    let redirected = false;
 
     if (!data.name || !data.phone || !data.email || !data.location) {
       if (redirect) {
         setActiveSection(sections[0]);
+        redirected = true;
       }
       if (!onlyActiveSection || activeSection === sections[0]) valid = false;
-    } else if (!data.role || !data.summary) {
+    }
+
+    if (!redirected && (!data.role || !data.summary)) {
       if (redirect) {
         setActiveSection(sections[1]);
       }
