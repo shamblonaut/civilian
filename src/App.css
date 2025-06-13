@@ -5,11 +5,6 @@
   font-family: Poppins, sans-serif;
 
   display: flex;
-
-  background: white;
-  background-image: radial-gradient(#0000004a 1px, transparent 0);
-  background-size: 40px 40px;
-  background-position: -19px -19px;
 }
 
 .sidebar {
@@ -55,6 +50,11 @@ main {
   display: flex;
   overflow-y: scroll;
 
+  background: white;
+  background-image: radial-gradient(#0000004a 1px, transparent 0);
+  background-size: 40px 40px;
+  background-position: -19px -19px;
+
   box-shadow: #0000004a -2px 0 4px;
 }
 
@@ -98,7 +98,8 @@ button:disabled {
   cursor: default;
 }
 
-.cv-reveal {
+.cv-reveal,
+.hero button {
   background-image: linear-gradient(135deg, #e64553, #8839ef);
   color: white;
   box-shadow:
@@ -107,7 +108,8 @@ button:disabled {
     rgba(255, 255, 255, 0.2) 0 -3px 0 inset;
 }
 
-.cv-reveal:hover {
+.cv-reveal:hover,
+.hero button:hover {
   box-shadow:
     rgba(0, 0, 0, 0.2) 0 4px 8px,
     rgba(0, 0, 0, 0.3) 0 7px 13px -3px,
@@ -158,6 +160,7 @@ button:disabled {
 
   .sidebar {
     box-shadow: #0000004a 0 2px 4px;
+    z-index: 1;
   }
 
   main {

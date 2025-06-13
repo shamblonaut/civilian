@@ -3,6 +3,7 @@ import { Menu, X } from "lucide-react";
 
 import "./App.css";
 
+import Hero from "./components/Hero.jsx";
 import Navigator from "./components/Navigator.jsx";
 import Editor from "./components/Editor.jsx";
 import Viewport from "./components/Viewport.jsx";
@@ -175,6 +176,7 @@ function App() {
   const [data, setData] = useState(emptyCV);
 
   const [activeSection, setActiveSection] = useState(sections[0]);
+  const [showHero, setShowHero] = useState(true);
   const [showCV, setShowCV] = useState(false);
   const [menuHidden, setMenuHidden] = useState(true);
 
@@ -238,49 +240,53 @@ function App() {
     setShowCV(true);
   }
 
-  return (
-    <>
-      <div className="sidebar">
-        <header>
-          <div
-            className="menu-button"
-            onClick={() => setMenuHidden(!menuHidden)}
-          >
-            {menuHidden ? <Menu className="icon" /> : <X className="icon" />}
-          </div>
-          <img src="/cv.svg" alt="Civilian Logo" />
-          <h1>CIVILIAN</h1>
-        </header>
-        <Navigator
-          sections={sections}
-          setActiveSection={setActiveSection}
-          showCV={showCV}
-          setShowCV={setShowCV}
-          checkCVValidity={checkCVValidity}
-          revealCV={revealCV}
-          loadExample={loadExample}
-          clearCV={clearCV}
-          menuHidden={menuHidden}
-          setMenuHidden={setMenuHidden}
-        />
-      </div>
-      <main>
-        {showCV ? (
-          <Viewport data={data} />
-        ) : (
-          <Editor
-            data={data}
-            setData={setData}
+  if (showHero) {
+    return <Hero setShowHero={setShowHero} />;
+  } else {
+    return (
+      <>
+        <div className="sidebar">
+          <header>
+            <div
+              className="menu-button"
+              onClick={() => setMenuHidden(!menuHidden)}
+            >
+              {menuHidden ? <Menu className="icon" /> : <X className="icon" />}
+            </div>
+            <img src="/cv.svg" alt="Civilian Logo" />
+            <h1>CIVILIAN</h1>
+          </header>
+          <Navigator
             sections={sections}
-            activeSection={activeSection}
             setActiveSection={setActiveSection}
+            showCV={showCV}
+            setShowCV={setShowCV}
             checkCVValidity={checkCVValidity}
             revealCV={revealCV}
+            loadExample={loadExample}
+            clearCV={clearCV}
+            menuHidden={menuHidden}
+            setMenuHidden={setMenuHidden}
           />
-        )}
-      </main>
-    </>
-  );
+        </div>
+        <main>
+          {showCV ? (
+            <Viewport data={data} />
+          ) : (
+            <Editor
+              data={data}
+              setData={setData}
+              sections={sections}
+              activeSection={activeSection}
+              setActiveSection={setActiveSection}
+              checkCVValidity={checkCVValidity}
+              revealCV={revealCV}
+            />
+          )}
+        </main>
+      </>
+    );
+  }
 }
 
 export default App;
