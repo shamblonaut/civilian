@@ -8,7 +8,7 @@
   background-position: -19px -19px;
 }
 
-header {
+header:has(~ .hero) {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -16,12 +16,12 @@ header {
   padding-bottom: 32px;
 }
 
-header img {
+header:has(~ .hero) img {
   width: 48px;
   height: auto;
 }
 
-header h1 {
+header:has(~ .hero) h1 {
   background: linear-gradient(135deg, #e64553, #8839ef);
   background-clip: text;
   color: transparent;
