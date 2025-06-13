@@ -181,6 +181,22 @@ function App() {
   const [showError, setShowError] = useState(false);
   const [menuHidden, setMenuHidden] = useState(true);
 
+  function saveCV() {
+    localStorage.setItem("data", JSON.stringify(data));
+  }
+
+  function loadCV() {
+    // Fetch data from local storage
+    const loadedData = JSON.parse(localStorage.getItem("data"));
+    console.log(loadedData);
+
+    // Check if at least one of theintended values exist inside the object
+    if (loadedData.name) {
+      // Overwrite the current data with the loaded one
+      setData(loadedData);
+    }
+  }
+
   function loadExample() {
     setData(exampleCV);
     setShowError(false);
@@ -266,6 +282,8 @@ function App() {
             clearCV={clearCV}
             menuHidden={menuHidden}
             setMenuHidden={setMenuHidden}
+            saveCV={saveCV}
+            loadCV={loadCV}
           />
         </div>
         <main>

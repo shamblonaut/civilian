@@ -1,3 +1,4 @@
+import { Save, ArrowDownFromLine, Book, Trash } from "lucide-react";
 import "../styles/Navigator.css";
 
 export default function Navigator({
@@ -11,6 +12,8 @@ export default function Navigator({
   clearCV,
   menuHidden,
   setMenuHidden,
+  saveCV,
+  loadCV,
 }) {
   return (
     <>
@@ -39,31 +42,58 @@ export default function Navigator({
       </nav>
 
       <div className={`app-actions ${menuHidden && "vertical-hidden"}`}>
-        <button
-          className="load-example"
-          type="button"
-          onClick={() => {
-            loadExample();
-            setMenuHidden(true);
-          }}
-        >
-          Load Example
-        </button>
-        <button
-          className="cv-clear"
-          type="button"
-          onClick={() => {
-            clearCV();
-            setMenuHidden(true);
-          }}
-        >
-          Clear CV
-        </button>
         {(checkCVValidity() || showCV) && (
           <button type="button" className="cv-toggle" onClick={toggleCV}>
             <p>{showCV ? "Edit CV" : "View CV"}</p>
           </button>
         )}
+
+        <div className="grid-actions">
+          <button
+            className="save-cv"
+            type="button"
+            onClick={() => {
+              saveCV();
+              setMenuHidden(true);
+            }}
+          >
+            <Save className="icon" />
+            <p>Save</p>
+          </button>
+          <button
+            className="load-cv"
+            type="button"
+            onClick={() => {
+              loadCV();
+              setMenuHidden(true);
+            }}
+          >
+            <ArrowDownFromLine className="icon" />
+            <p>Load</p>
+          </button>
+          <button
+            className="load-example"
+            type="button"
+            onClick={() => {
+              loadExample();
+              setMenuHidden(true);
+            }}
+          >
+            <Book className="icon" />
+            <p>Example</p>
+          </button>
+          <button
+            className="cv-clear"
+            type="button"
+            onClick={() => {
+              clearCV();
+              setMenuHidden(true);
+            }}
+          >
+            <Trash className="icon" />
+            <p>Clear</p>
+          </button>
+        </div>
       </div>
     </>
   );

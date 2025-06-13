@@ -43,6 +43,23 @@ nav a:hover {
   width: 100%;
   padding: 16px;
   margin-top: 8px;
+  font-size: 1rem;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.app-actions .icon {
+  width: 24px;
+  height: auto;
+  padding-right: 8px;
+}
+
+.grid-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
 }
 
 .viewport .cv-toggle {
