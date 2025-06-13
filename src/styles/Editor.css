@@ -100,7 +100,7 @@
   width: 100%;
 }
 
-.editor form input:not(:placeholder-shown),
+.editor form input:not([type="date"]):not(:placeholder-shown),
 .editor form textarea:not(:placeholder-shown) {
   border-color: blue;
 }
@@ -207,6 +207,11 @@
 .new-item h2,
 .new-item h4 {
   margin-bottom: 8px;
+}
+
+.new-item input:not([type="date"]),
+.new-item textarea {
+  background: none;
 }
 
 .new-item-actions {
